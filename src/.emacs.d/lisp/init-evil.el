@@ -39,6 +39,8 @@
 (define-key evil-normal-state-map (kbd "C-j") '(lambda () (interactive) (next-line 5)))
 (define-key evil-normal-state-map (kbd "C-k") '(lambda () (interactive) (previous-line 5)))
 
+(define-key evil-normal-state-map (kbd "C-t") 'my/ctrlt)
+
 ; TODO - improvement store/restore cursor position
 (define-key evil-normal-state-map (kbd "C-S-j") 'move-line-down)
 (define-key evil-normal-state-map (kbd "C-S-k") 'move-line-up)

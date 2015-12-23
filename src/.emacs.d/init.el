@@ -20,6 +20,7 @@
 ;; POWERLINE - Mode line customization 
 (require 'init-package)
 (require 'init-powerline)
+(require 'init-project)
 (require 'init-evil)
 (require 'init-lisp)
 
