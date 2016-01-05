@@ -37,12 +37,13 @@
 (dolist (hook '(prog-mode-hook))
   (add-hook hook 'flyspell-prog-mode))
 
-;;; BACKUP
+;; BACKUP
 (defvar backup-dir "~/.emacs.d/backups/")
 (setq backup-directory-alist (list (cons "." backup-dir)))
 (setq make-backup-files nil)
 (setq-default highlight-symbol-idle-delay 1.5)
 
+;; FONT settings
 (defun my/font-set (myfont)
   ;; My font settings
   (interactive)
@@ -51,7 +52,7 @@
 )
 (my/font-set "DejaVu Sans Mono")
 
-;; activate the powerline
+;; POWERLINE
 (my-powerline-default-theme)
 
 ;; Save history - but do not save duplicates
