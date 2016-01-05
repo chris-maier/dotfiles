@@ -24,6 +24,10 @@
 (require 'init-evil)
 (require 'init-lisp)
 
+;; MAGIT does need a 24.4 version of emacs
+;; MAGIT config 
+;; (require-package 'magit)
+
 ;; Zenburn THEME 
 (require-package 'zenburn-theme)
 (load-theme 'zenburn t)
@@ -42,9 +46,10 @@
 )
 (my-font-set "DejaVu Sans Mono")
 
-; active the powerline 
+;; activate the powerline 
 (my-powerline-default-theme)
 
+;; Save history - but do not save duplicates
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)
 (setq history-length t)
