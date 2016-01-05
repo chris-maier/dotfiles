@@ -43,13 +43,13 @@
 (setq make-backup-files nil)
 (setq-default highlight-symbol-idle-delay 1.5)
 
-(defun my-font-set (myfont)
+(defun my/font-set (myfont)
   ;; My font settings
   (interactive)
   (when (member myfont (font-family-list))
     (set-face-attribute 'default nil :font myfont))
 )
-(my-font-set "DejaVu Sans Mono")
+(my/font-set "DejaVu Sans Mono")
 
 ;; activate the powerline
 (my-powerline-default-theme)
