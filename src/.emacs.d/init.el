@@ -17,7 +17,7 @@
 (show-paren-mode 1)
 
 ;; Load personal lisp files
-;; POWERLINE - Mode line customization 
+;; POWERLINE - Mode line customization
 (require 'init-package)
 (require 'init-powerline)
 (require 'init-project)
@@ -25,14 +25,14 @@
 (require 'init-lisp)
 
 ;; MAGIT does need a 24.4 version of emacs
-;; MAGIT config 
+;; MAGIT config
 ;; (require-package 'magit)
 
-;; Zenburn THEME 
+;; Zenburn THEME
 (require-package 'zenburn-theme)
 (load-theme 'zenburn t)
 
-;;; BACKUP 
+;;; BACKUP
 (defvar backup-dir "~/.emacs.d/backups/")
 (setq backup-directory-alist (list (cons "." backup-dir)))
 (setq make-backup-files nil)
@@ -46,7 +46,7 @@
 )
 (my-font-set "DejaVu Sans Mono")
 
-;; activate the powerline 
+;; activate the powerline
 (my-powerline-default-theme)
 
 ;; Save history - but do not save duplicates
@@ -59,5 +59,9 @@
       '(kill-ring
         search-ring
         regexp-search-ring))
+
+;; Delete trailing whitespace in every programming language
+(add-hook 'prog-mode-hook
+	  (lambda () (add-to-list 'before-save-hook 'delete-trailing-whitespace)))
 
 (evil-mode t)
