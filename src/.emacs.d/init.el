@@ -32,6 +32,11 @@
 (require-package 'zenburn-theme)
 (load-theme 'zenburn t)
 
+;; ISPELL settings
+(setq ispell-dictionary "english")
+(dolist (hook '(prog-mode-hook))
+  (add-hook hook 'flyspell-prog-mode))
+
 ;;; BACKUP
 (defvar backup-dir "~/.emacs.d/backups/")
 (setq backup-directory-alist (list (cons "." backup-dir)))
