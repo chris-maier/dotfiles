@@ -10,6 +10,7 @@
 (evil-leader/set-key 
   "e" 'find-file
   "," 'other-window
+  "." 'switch-to-prev-buffer
   "o" 'delete-other-windows
   "w" 'save-buffer
   "k" 'kill-buffer
@@ -19,11 +20,13 @@
 )
 
 
+;; We probaly should move these functions to a seperate file
 (defun move-line-up ()
 "Move line up one line"
   (interactive)
   (transpose-lines 1)
   (forward-line -2))
+
 (defun move-line-down ()
 "Move line down one line"
   (interactive)
@@ -31,15 +34,17 @@
   (transpose-lines 1)
   (forward-line -1))
 
-; up/down in screen lines instead of logical lines
+;; Moving around
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "C-h") 'backward-word)
-(define-key evil-normal-state-map (kbd "C-l") 'forward-word)
+(define-key evil-normal-state-map (kbd "C-h") 'evil-backward-word-begin)
+(define-key evil-normal-state-map (kbd "C-l") 'evil-forward-word-begin)
 (define-key evil-normal-state-map (kbd "C-j") '(lambda () (interactive) (next-line 5)))
 (define-key evil-normal-state-map (kbd "C-k") '(lambda () (interactive) (previous-line 5)))
 
-(define-key evil-normal-state-map (kbd "C-t") 'my/ctrlt)
+(define-key evil-normal-state-map (kbd "C-t") 'my/find-file)
+;; (define-key evil-normal-state-map (kbd "C-p") '(my/switch-project nil))
+;; (define-key evil-normal-state-map (kbd "C-P") '(my/switch-project t))
 
 ; TODO - improvement store/restore cursor position
 (define-key evil-normal-state-map (kbd "C-S-j") 'move-line-down)
