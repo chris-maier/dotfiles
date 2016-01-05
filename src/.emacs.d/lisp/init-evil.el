@@ -1,4 +1,4 @@
-;; EVIL leader config 
+;; EVIL leader config
 (require-package 'evil)
 (require-package 'evil-leader)
 (require-package 'evil-nerd-commenter)
@@ -7,10 +7,11 @@
 (global-evil-leader-mode)
 
 (evil-leader/set-leader ",")
-(evil-leader/set-key 
-  "e" 'find-file
+(evil-leader/set-key
+  "e" 'ido-find-file
+  "s" 'ido-switch-buffer
   "," 'other-window
-  "." 'switch-to-prev-buffer
+  ;; "." 'switch-to-prev-buffer
   "o" 'delete-other-windows
   "w" 'save-buffer
   "k" 'kill-buffer
@@ -18,7 +19,6 @@
   ;; nerd-commenter
   "ci" 'evilnc-comment-or-uncomment-lines
 )
-
 
 ;; We probaly should move these functions to a seperate file
 (defun move-line-up ()
@@ -43,7 +43,7 @@
 (define-key evil-normal-state-map (kbd "C-k") '(lambda () (interactive) (previous-line 5)))
 
 (define-key evil-normal-state-map (kbd "C-t") 'my/find-file)
-;; (define-key evil-normal-state-map (kbd "C-p") '(my/switch-project nil))
+(define-key evil-normal-state-map (kbd "C-p") 'projectile-switch-project)
 ;; (define-key evil-normal-state-map (kbd "C-P") '(my/switch-project t))
 
 ; TODO - improvement store/restore cursor position
