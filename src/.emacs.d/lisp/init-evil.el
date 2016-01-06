@@ -8,19 +8,25 @@
 
 (evil-leader/set-leader ",")
 (evil-leader/set-key
-  "e" 'ido-find-file
-  "s" 'ido-switch-buffer
+  ;; TODO - switch to helm
+  ;; "e" 'helm-find-file
   "," 'other-window
   ;; "." 'switch-to-prev-buffer
   "o" 'delete-other-windows
   "w" 'save-buffer
   "k" 'kill-buffer
 
+  ;; switch buffers
+  "s" 'helm-mini
+  ;; find functions in this file
+  "f" 'helm-imenu
+  "x" 'helm-M-x
+
   ;; nerd-commenter
-  "ci" 'evilnc-comment-or-uncomment-lines
+  "cc" 'evilnc-comment-or-uncomment-lines
 )
 
-;; We probaly should move these functions to a seperate file
+;; We probably should move these functions to a seperate file
 (defun move-line-up ()
 "Move line up one line"
   (interactive)
@@ -43,8 +49,8 @@
 (define-key evil-normal-state-map (kbd "C-k") '(lambda () (interactive) (previous-line 5)))
 
 (define-key evil-normal-state-map (kbd "C-t") 'my/find-file)
-(define-key evil-normal-state-map (kbd "C-p") 'projectile-switch-project)
-;; (define-key evil-normal-state-map (kbd "C-P") '(my/switch-project t))
+(define-key evil-normal-state-map (kbd "C-p") 'helm-projectile)
+(define-key evil-normal-state-map (kbd "C-S-P") 'helm-projectile-switch-project)
 
 ; TODO - improvement store/restore cursor position
 (define-key evil-normal-state-map (kbd "C-S-j") 'move-line-down)
