@@ -1,20 +1,8 @@
 ;; Project handling
-;; (require-package 'ido)
-;; (require-package 'ido-vertical-mode)
-;; (require-package 'ido-better-flex)
-
-;; (ido-mode t)
-;; (ido-vertical-mode t)
-;; (setq ido-vertical-show-count 20)
-;; enable better fuzzy search
-;; (ido-better-flex/enable)
 
 (require-package 'helm)
 (require-package 'helm-projectile)
-;; (require-package 'helm-ag)
-;; (require-package 'helm-ag-project-root)
-;; (require-package 'helm-ag-buffers)
-;; (require-package 'helm-projectile)
+(require-package 'helm-ag)
 
 (helm-mode 1)
 (projectile-global-mode)
