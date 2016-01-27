@@ -8,6 +8,7 @@
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
 (setq projectile-enable-caching t)
+;; (setq projectile-indexing-method 'native)
 (helm-projectile-on)
 
 (helm-autoresize-mode 1)
@@ -21,7 +22,7 @@
   (interactive)
   (if (projectile-project-p)
       (helm-projectile-find-file)
-    (helm-find-file)
+    (helm-find-files-1 default-directory)
     )
   )
 
