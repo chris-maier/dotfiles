@@ -30,10 +30,12 @@
 )
 
 ;; Moving around
-(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "C-h") 'evil-backward-word-begin)
-(define-key evil-normal-state-map (kbd "C-l") 'evil-forward-word-begin)
+(define-key evil-normal-state-map (kbd "l") '(lambda () (interactive) (evil-forward-char 1 t t)))
+(define-key evil-normal-state-map (kbd "h") '(lambda () (interactive) (evil-backward-char 1 t t)))
+(define-key evil-normal-state-map (kbd "k") '(lambda () (interactive) (ignore-errors (evil-previous-visual-line))))
+(define-key evil-normal-state-map (kbd "j") '(lambda () (interactive) (ignore-errors (evil-next-visual-line))))
+(define-key evil-normal-state-map (kbd "C-h") '(lambda () (interactive) (ignore-errors (evil-backward-word-begin))))
+(define-key evil-normal-state-map (kbd "C-l") '(lambda () (interactive) (ignore-errors (evil-forward-word-begin))))
 (define-key evil-normal-state-map (kbd "C-j") '(lambda () (interactive) (ignore-errors (evil-next-visual-line 5))))
 (define-key evil-normal-state-map (kbd "C-k") '(lambda () (interactive) (ignore-errors (evil-previous-visual-line 5))))
 
