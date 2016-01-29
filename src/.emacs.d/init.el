@@ -76,9 +76,30 @@
 
 ;; BACKUP
 (defvar backup-dir "~/.emacs.d/backups/")
-(setq backup-directory-alist (list (cons "." backup-dir)))
-(setq make-backup-files nil)
-(setq-default highlight-symbol-idle-delay 1.5)
+(unless (file-name-directory backup-dir)
+  (make-directory backup-dir t))
+(setq backup-by-copying t
+      backup-directory-alist
+      '(("." . backup-dir))
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
+
+;; HISTORY
+(setq savehist-file "~/.emacs.d/savehist"
+      savehist-additional-variables '(kill-ring
+				      search-ring
+				      regexp-search-ring
+				      extended-command-history
+				      ring
+				      grep-history)
+      history-length t
+      history-delete-duplicates t
+      savehist-save-minibuffer-history t
+      savehist-autosave-interval 60)
+(setq-default history-length 1000)
+(savehist-mode t)
 
 ;; Font settings - if available
 (my/font-set "DejaVu Sans Mono")
@@ -89,17 +110,6 @@
 
 ;; POWERLINE
 (my-powerline-default-theme)
-
-;; Save history - but do not save duplicates
-(setq savehist-file "~/.emacs.d/savehist")
-(savehist-mode 1)
-(setq history-length t)
-(setq history-delete-duplicates t)
-(setq savehist-save-minibuffer-history 1)
-(setq savehist-additional-variables
-      '(kill-ring
-        search-ring
-        regexp-search-ring))
 
 ;; Delete trailing whitespace in every programming language
 (add-hook 'prog-mode-hook
