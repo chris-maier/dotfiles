@@ -1,0 +1,7 @@
+* Emacs configuartion
+
+** DONE Backup and History
+** DONE No Error on move actions
+** TODO Transpose lines in evil mode
+** TODO Grep/Silver surfer
+** TODO Magit
