@@ -2,6 +2,9 @@
 
 ** DONE Backup and History
 ** DONE No Error on move actions
+** TODO Python Mode
+** TODO C++ Mode
 ** TODO Transpose lines in evil mode
 ** TODO Grep/Silver surfer
+** TODO Yasnippets
 ** TODO Magit
