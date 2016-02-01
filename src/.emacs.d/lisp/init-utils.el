@@ -1,37 +1,39 @@
 (require 'evil)
 
-(defun my/move-line-up ()
-  "Move line up one line"
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2))
+(defun my/move-text-internal (arg)
+  (cond
+   ((and mark-active transient-mark-mode)
+    (if (> (point) (mark))
+        (exchange-point-and-mark))
+    (let ((column (current-column))
+          (text (delete-and-extract-region (point) (mark))))
+      (forward-line arg)
+      (move-to-column column t)
+      (set-mark (point))
+      (insert text)
+      (exchange-point-and-mark)
+      (setq deactivate-mark nil)))
+   (t
+    (let ((column (current-column)))
+      (beginning-of-line)
+      (when (or (> arg 0) (not (bobp)))
+        (forward-line)
+        (when (or (< arg 0) (not (eobp)))
+          (transpose-lines arg))
+        (forward-line -1))
+      (move-to-column column t)))))
 
-(defun my/move-line-down ()
-  "Move line down one line"
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1))
+(defun my/move-text-down (arg)
+  "Move region (transient-mark-mode active) or current line
+  arg lines down."
+  (interactive "*p")
+  (my/move-text-internal arg))
 
-(defun my/move-region (start end n)
-  "Move the current region up or down by N lines."
-  (interactive "r\np")
-  (let ((line-text (delete-and-extract-region start end)))
-    (forward-line n)
-    (let ((start (point)))
-      (insert line-text)
-      (setq deactivate-mark nil)
-      (set-mark start))))
-
-(defun my/move-region-up (start end n)
-  "Move the current line up by N lines."
-  (interactive "r\np")
-  (move-region start end (if (null n) -1 (- n))))
-
-(defun my/move-region-down (start end n)
-  "Move the current line down by N lines."
-  (interactive "r\np")
-  (my/move-region start end (if (null n) 1 n)))
+(defun my/move-text-up (arg)
+  "Move region (transient-mark-mode active) or current line
+  arg lines up."
+  (interactive "*p")
+  (my/move-text-internal (- arg)))
 
 (evil-define-motion my/evil-next-visual-line ()
   "Move the cursor 5 screen lines down."
