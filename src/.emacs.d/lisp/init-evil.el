@@ -2,6 +2,7 @@
 (require-package 'evil)
 (require-package 'evil-jumper)
 (require-package 'evil-leader)
+(require-package 'evil-numbers)
 (require-package 'evil-nerd-commenter)
 (require-package 'key-chord)
 
@@ -77,6 +78,10 @@
 (define-key evil-normal-state-map (kbd "C-+") 'evil-jump-to-tag)
 (define-key evil-normal-state-map (kbd "C-o") 'evil-jumper/backward)
 (define-key evil-normal-state-map (kbd "C-i") 'evil-jumper/forward)
+
+;; Evil numbers mappings
+(define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
 
 ;; 'jk' fast <ESC>
 (setq key-chord-two-keys-delay 0.2)
