@@ -42,25 +42,20 @@
 ;; (require-package 'magit)
 
 (require-package 'use-package)
-(eval-when-compile
-  (require 'use-package))
 
-;; (use-package yasnippet
-;;   :ensure t
-;;   :defer t
-;;   ;; :diminish yas-minor-mode
-;;   :config
-;;   (yas-reload-all)
-;;   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-;;   (setq tab-always-indent 'complete)
-;;   (setq yas-prompt-functions '(yas-completing-prompt
-;;                                yas-dropdown-prompt))
-;;   (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet))
-;;
-;; (require-package 'yasnippet)
-;; (setq yas-snippet-dirs
-;;       '("~/.emacs.d/snippets"))
-;; (yas-global-mode 1)
+(require-package 'yasnippet)
+(use-package yasnippet
+  :ensure t
+  :defer t
+  ;; :diminish yas-minor-mode
+  :config
+  (yas-reload-all)
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (setq tab-always-indent 'complete)
+  (setq yas-prompt-functions '(yas-completing-prompt
+                               yas-dropdown-prompt))
+  (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet))
+(yas-global-mode 1)
 
 ;; Zenburn THEME
 ;; does not work properly
