@@ -3,6 +3,7 @@
 (require-package 'evil-jumper)
 (require-package 'evil-leader)
 (require-package 'evil-numbers)
+(require-package 'evil-org)
 (require-package 'evil-nerd-commenter)
 (require-package 'key-chord)
 
@@ -57,24 +58,6 @@
 (define-key evil-normal-state-map (kbd "C-t") 'my/find-file)
 (define-key evil-normal-state-map (kbd "C-p") 'helm-projectile)
 (define-key evil-normal-state-map (kbd "C-S-P") 'helm-projectile-switch-project)
-
-;; ORG-Mode
-(evil-define-key 'normal org-mode-map (kbd "C-S-l") 'org-shiftright)
-(evil-define-key 'normal org-mode-map (kbd "C-S-h") 'org-shiftleft)
-(evil-define-key 'insert org-mode-map (kbd "C-S-l") 'org-shiftright)
-(evil-define-key 'insert org-mode-map (kbd "C-S-h") 'org-shiftleft)
-;; Move org element right
-(evil-define-key 'normal org-mode-map (kbd "M-l") 'org-metaright)
-(evil-define-key 'insert org-mode-map (kbd "M-l") 'org-metaright)
-;; Move org element left
-(evil-define-key 'normal org-mode-map (kbd "M-h") 'org-metaleft)
-(evil-define-key 'insert org-mode-map (kbd "M-h") 'org-metaleft)
-;; Move org element up
-(evil-define-key 'normal org-mode-map (kbd "M-k") 'org-metaup)
-(evil-define-key 'insert org-mode-map (kbd "M-k") 'org-metaup)
-;; Move org element down
-(evil-define-key 'normal org-mode-map (kbd "M-j") 'org-metadown)
-(evil-define-key 'insert org-mode-map (kbd "M-j") 'org-metadown)
 
 ;; Jumper Mode mappings
 (define-key evil-normal-state-map (kbd "C-+") 'evil-jump-to-tag)
