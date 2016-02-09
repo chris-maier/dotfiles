@@ -40,16 +40,18 @@
 (define-key evil-normal-state-map (kbd "C-j") '(lambda () (interactive) (ignore-errors (evil-next-visual-line 5))))
 (define-key evil-normal-state-map (kbd "C-k") '(lambda () (interactive) (ignore-errors (evil-previous-visual-line 5))))
 
-(define-key evil-normal-state-map (kbd "C-S-j") 'my/move-line-down)
-(define-key evil-normal-state-map (kbd "C-S-k") 'my/move-line-up)
-
 (define-key evil-normal-state-map (kbd "SPC") 'evil-search-forward)
+
+;; Move Text
+(define-key evil-normal-state-map (kbd "C-S-k") 'my/move-text-up)
+(define-key evil-normal-state-map (kbd "C-S-j") 'my/move-text-down)
+(define-key evil-visual-state-map (kbd "C-S-j") 'my/move-text-down)
+(define-key evil-visual-state-map (kbd "C-S-j") 'my/move-text-down)
+(define-key evil-visual-state-map (kbd "C-S-k") 'my/move-text-up)
 
 ;; Move in VISUAL
 (define-key evil-visual-state-map (kbd "C-j") 'my/evil-next-visual-line)
 (define-key evil-visual-state-map (kbd "C-k") 'my/evil-previous-visual-line)
-(define-key evil-visual-state-map (kbd "C-S-j") 'my/move-region-down)
-(define-key evil-visual-state-map (kbd "C-S-k") 'my/move-region-up)
 
 ;; PROJECTILE
 (define-key evil-normal-state-map (kbd "C-t") 'my/find-file)
