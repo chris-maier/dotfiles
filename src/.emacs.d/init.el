@@ -32,7 +32,6 @@
 ;; POWERLINE - Mode line customization
 (require 'init-package)
 (require 'init-powerline)
-(require 'init-project)
 (require 'init-evil)
 (require 'init-utils)
 (require 'init-lisp)
@@ -42,8 +41,8 @@
 ;; (require-package 'magit)
 
 (require-package 'use-package)
+(require-package 'diminish)
 
-(require-package 'yasnippet)
 (use-package yasnippet
   :ensure t
   :defer t
@@ -57,12 +56,40 @@
   (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet))
 (yas-global-mode 1)
 
+(use-package helm
+  :ensure t
+  :defer t
+  :diminish helm-mode
+  :init
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-recentf-fuzzy-match t)
+  :config
+  (helm-mode 1)
+  (setq helm-autoresize-mode t)
+  (setq helm-buffer-max-length 40))
+
+(use-package helm-projectile
+  :ensure t
+  :init
+  (setq helm-projectile-fuzzy-match t)
+  ;; :commands (helm-projectile helm-projectile-switch-project)
+  :config
+  (helm-projectile-on))
+
+(use-package projectile
+  :ensure t
+  :defer t
+  :config
+  (projectile-global-mode)
+  (setq projectile-enable-caching t)
+  (setq projectile-completion-system 'helm))
+
 ;; Zenburn THEME
-;; does not work properly
-;; (require-package 'zenburn-theme)
-;; (use-package zenburn-theme
-;;   :ensure t
-;;   :defer t)
+(use-package zenburn-theme
+  :ensure t
+  :init
+  (load-theme 'zenburn t)
+  :defer t)
 
 ;; ISPELL settings
 ;; (setq ispell-dictionary "english")
@@ -115,13 +142,10 @@
 (cond ((eq system-type 'windows-nt)
        (setq path-to-ctags "C:/Users/u2832/emacs-24.3/bin/ctags.exe"))
       ((eq system-type 'gnu/linux)
-       (setq path-to-ctags "ctags"))
-)
+       (setq path-to-ctags "ctags")))
 
-(require-package 'diminish)
 (eval-after-load "ElDoc" '(diminish 'eldoc-mode))
 (eval-after-load "Undo-Tree" '(diminish 'undo-tree-mode))
-(eval-after-load "Helm" '(diminish 'helm-mode))
 ;; (eval-after-load "projectile" '(diminish 'projectile-mode))
 (eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode))
 (eval-after-load "Abbrev" '(diminish 'abbrev-mode))
