@@ -1,4 +1,9 @@
 (require 'evil)
+;; Required packages
+;; - evil
+;; - projectile
+;; - helm
+;; - helm-projectile
 
 (defun my/move-text-internal (arg)
   (cond
@@ -62,5 +67,14 @@
   (shell-command
    (format "%s -e --extra=+fq -R %s" path-to-ctags (directory-file-name dir-name)))
 )
+
+(defun my/find-file ()
+  "Find file in current project, if we are not in a project we probably want to navigate to one"
+  (interactive)
+  (if (projectile-project-p)
+      (helm-projectile-find-file)
+    (helm-find-files-1 default-directory)
+    )
+  )
 
 (provide 'init-utils)
