@@ -6,8 +6,6 @@
 (require-package 'evil-nerd-commenter)
 (require-package 'evil-escape)
 
-(require-package 'key-chord)
-
 (require 'init-utils)
 
 (defun my/config-evil-leader ()
@@ -90,11 +88,6 @@
   (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
   (define-key evil-normal-state-map (kbd "C-y") 'evil-numbers/dec-at-pt))
 
-  ;; 'jk' fast <ESC>
-  ;; (setq key-chord-two-keys-delay 0.2)
-  ;; (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-  ;; (key-chord-mode t))
-
 (use-package evil
   :ensure t
   :config
@@ -114,6 +107,7 @@
 
 (use-package evil-escape
   :ensure t
+  :diminish evil-escape-mode
   :config
   (evil-escape-mode)
   (setq evil-escape-unordered-key-sequence t)
