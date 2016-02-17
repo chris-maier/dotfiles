@@ -43,22 +43,9 @@
 (require-package 'use-package)
 (require-package 'diminish)
 
-(use-package yasnippet
-  :ensure t
-  :defer t
-  ;; :diminish yas-minor-mode
-  :config
-  (yas-reload-all)
-  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-  (setq tab-always-indent 'complete)
-  (setq yas-prompt-functions '(yas-completing-prompt
-                               yas-dropdown-prompt))
-  (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet))
-(yas-global-mode 1)
-
 (use-package helm
   :ensure t
-  :defer t
+  ;; :defer t
   :diminish helm-mode
   :init
   (setq helm-buffers-fuzzy-matching t)
@@ -70,6 +57,7 @@
 
 (use-package helm-projectile
   :ensure t
+  ;; :defer t
   :init
   (setq helm-projectile-fuzzy-match t)
   ;; :commands (helm-projectile helm-projectile-switch-project)
@@ -78,11 +66,47 @@
 
 (use-package projectile
   :ensure t
-  :defer t
+  ;; :defer t
   :config
   (projectile-global-mode)
   (setq projectile-enable-caching t)
   (setq projectile-completion-system 'helm))
+
+;; (use-package yasnippet
+;;   :ensure t
+;;   :defer t
+;;   ;; :diminish yas-minor-mode
+;;   :init
+;;   (yas-global-mode)
+;;   :config
+;;   (yas-reload-all)
+;;   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+;;   ;; (setq tab-always-indent 'complete)
+;;   (setq yas-prompt-functions '(yas-completing-prompt
+;;                                yas-ido-prompt
+;;                                yas-dropdown-prompt))
+;;   ;; disable TAB so that it does not interfere with Company
+;;   (define-key yas-minor-mode-map (kbd "<tab>") nil)
+;;   (define-key yas-minor-mode-map (kbd "TAB") nil)
+;;   (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+;;   (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet)
+;; )
+
+;; (use-package company
+;;   :ensure t
+;;   ;; :defer 30
+;;   :init
+;;   (global-company-mode)
+;;   :config
+;;   (setq company-idle-delay nil)
+;;   (setq company-minimum-prefix-length 2)
+;;   (setq company-abort-manual-when-too-short t)
+;;   (setq company-selection-wrap-around t)
+
+;;   (define-key company-mode-map [tab] 'company-complete-common-or-cycle)
+;;   (define-key company-active-map (kbd "C-n") 'company-select-next)
+;;   (define-key company-active-map (kbd "C-p") 'company-select-previous))
+
 
 ;; Zenburn THEME
 (use-package zenburn-theme
@@ -90,6 +114,11 @@
   :init
   (load-theme 'zenburn t)
   :defer t)
+;; Tango Plus THEME
+;; (use-package tango-plus-theme
+;;   :ensure t
+;;   :init
+;;   (load-theme 'tango-plus t))
 
 ;; ISPELL settings
 ;; (setq ispell-dictionary "english")
@@ -132,9 +161,8 @@
 ;; POWERLINE
 (my-powerline-default-theme)
 
-;; Delete trailing whitespace in every programming language
-(add-hook 'prog-mode-hook
-	  (lambda () (add-to-list 'before-save-hook 'delete-trailing-whitespace)))
+;; Programming Mode
+(add-hook 'prog-mode-hook 'my/prog-mode-hooks)
 
 ;; disable line split on org-meta-return
 (setq org-M-RET-may-split-line nil)
@@ -144,11 +172,13 @@
       ((eq system-type 'gnu/linux)
        (setq path-to-ctags "ctags")))
 
+;; Diminish all other things around
 (eval-after-load "ElDoc" '(diminish 'eldoc-mode))
 (eval-after-load "Undo-Tree" '(diminish 'undo-tree-mode))
 ;; (eval-after-load "projectile" '(diminish 'projectile-mode))
 (eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode))
 (eval-after-load "Abbrev" '(diminish 'abbrev-mode))
+(eval-after-load "hs-minor-mode" '(diminish 'hs-minor-mode))
 
 (evil-jumper-mode t)
 (evil-mode t)

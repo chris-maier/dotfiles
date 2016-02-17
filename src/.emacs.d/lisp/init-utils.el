@@ -77,4 +77,11 @@
     )
   )
 
+(defun my/prog-mode-hooks ()
+  "Executed when switching to prog-mode"
+  ;; delete trailing whitespace before saving the file
+  (add-to-list 'before-save-hook 'delete-trailing-whitespace)
+  ;; enable code folding
+  (hs-minor-mode 1))
+
 (provide 'init-utils)

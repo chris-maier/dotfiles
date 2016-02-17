@@ -2,9 +2,13 @@
 
 ** DONE Backup and History
 ** DONE No Error on move actions
+** DONE Transpose lines in evil mode
+** DONE Yasnippets
+** TODO Company
+** TODO Flycheck
 ** TODO Python Mode
 ** TODO C++ Mode
-** DONE Transpose lines in evil mode
+*** DONE Code folding
 ** TODO Grep/Silver surfer
-** TODO Yasnippets
+*** 'helm-ag
 ** TODO Magit
