@@ -109,16 +109,24 @@
 
 
 ;; Zenburn THEME
-(use-package zenburn-theme
-  :ensure t
-  :init
-  (load-theme 'zenburn t)
-  :defer t)
-;; Tango Plus THEME
-;; (use-package tango-plus-theme
+;; (use-package zenburn-theme
 ;;   :ensure t
 ;;   :init
-;;   (load-theme 'tango-plus t))
+;;   (load-theme 'zenburn t)
+;;   :defer t)
+;; Tango Plus THEME
+(use-package tango-plus-theme
+  :ensure t
+  :init
+  (load-theme 'tango-plus t))
+
+;; DIRED
+(use-package dired
+  :config
+  ; use the same buffer for navigation
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
+  (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
+)
 
 ;; ISPELL settings
 ;; (setq ispell-dictionary "english")
@@ -164,6 +172,12 @@
 ;; Programming Mode
 (add-hook 'prog-mode-hook 'my/prog-mode-hooks)
 
+;; C Mode programming
+(setq c-default-style "linux"
+	  c-basic-offset 4
+	  tab-width 4
+	  indent-tabs-mode t)
+
 ;; disable line split on org-meta-return
 (setq org-M-RET-may-split-line nil)
 
@@ -182,3 +196,4 @@
 
 (evil-jumper-mode t)
 (evil-mode t)
+(put 'dired-find-alternate-file 'disabled nil)
