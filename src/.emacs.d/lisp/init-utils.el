@@ -81,6 +81,8 @@
   "Executed when switching to prog-mode"
   ;; delete trailing whitespace before saving the file
   (add-to-list 'before-save-hook 'delete-trailing-whitespace)
+  ;; enable line numbers
+  (linum-mode 1)
   ;; enable code folding
   (hs-minor-mode 1))
 
