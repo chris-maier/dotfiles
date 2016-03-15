@@ -113,12 +113,18 @@
 ;;   :ensure t
 ;;   :init
 ;;   (load-theme 'zenburn t)
-;;   :defer t)
-;; Tango Plus THEME
-(use-package tango-plus-theme
+;; ;;   :defer t)
+
+(use-package leuven-theme
   :ensure t
   :init
-  (load-theme 'tango-plus t))
+  (load-theme 'leuven t))
+
+;; Tango Plus THEME
+;; (use-package tango-plus-theme
+;;   :ensure t
+;;   :init
+;;   (load-theme 'tango-plus t))
 
 ;; DIRED
 (use-package dired
@@ -126,6 +132,7 @@
   ; use the same buffer for navigation
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
   (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
+  (global-set-key (kbd "<f7>") 'my/show-dired)
 )
 
 ;; ISPELL settings
