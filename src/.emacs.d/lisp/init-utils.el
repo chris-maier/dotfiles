@@ -77,6 +77,16 @@
     )
   )
 
+(defun my/show-dired ()
+  "Create new buffer and open the directory structure of the current buffer.
+Switch to home directory if the current buffer has now filename."
+  (interactive)
+  (setq buf (buffer-file-name))
+  (if buf
+      (dired (file-name-directory buf))
+    (dired "~"))
+)
+
 (defun my/prog-mode-hooks ()
   "Executed when switching to prog-mode"
   ;; delete trailing whitespace before saving the file
