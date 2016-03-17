@@ -20,6 +20,9 @@
 ;; Enable visual wrap lines
 (setq visual-line-mode)
 
+;; Scroll behaviour
+(setq scroll-margin 10)
+
 ;; PAREN-MODE - display matching parentheses
 ;(setq show-paren-style 'mixed)
 ;(setq show-paren-delay 0.05)
