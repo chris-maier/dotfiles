@@ -138,6 +138,13 @@
   (global-set-key (kbd "<f7>") 'my/show-dired)
 )
 
+;; TERM
+(use-package term
+  :config
+  ;; disable scroll-margin in term-mode to use the full screen
+  (add-hook 'term-mode-hook (lambda () (interactive) (setq-local scroll-margin 0)))
+  )
+
 ;; ISPELL settings
 ;; (setq ispell-dictionary "english")
 ;; (dolist (hook '(prog-mode-hook))
