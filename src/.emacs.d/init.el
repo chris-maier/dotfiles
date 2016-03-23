@@ -20,6 +20,9 @@
 ;; Enable visual wrap lines
 (setq visual-line-mode)
 
+;; Scroll Margin
+(setq scroll-margin 10)
+
 ;; PAREN-MODE - display matching parentheses
 ;(setq show-paren-style 'mixed)
 ;(setq show-paren-delay 0.05)
@@ -53,7 +56,10 @@
   :config
   (helm-mode 1)
   (setq helm-autoresize-mode t)
-  (setq helm-buffer-max-length 40))
+  (setq helm-buffer-max-length 40)
+  :bind (:map helm-find-files-map
+	      ("<C-backspace>" . backward-kill-word))
+  )
 
 (use-package helm-projectile
   :ensure t
@@ -134,6 +140,13 @@
   (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
   (global-set-key (kbd "<f7>") 'my/show-dired)
 )
+
+;; TERM
+(use-package term
+  :config
+  ; disable scroll-margin in term-mode to use the full screen
+  (add-hook 'term-mode-hook (lambda () (interactive) (setq-local scroll-margin 0)))
+  )
 
 ;; ISPELL settings
 ;; (setq ispell-dictionary "english")
