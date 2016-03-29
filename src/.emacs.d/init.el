@@ -219,6 +219,5 @@
 (eval-after-load "Abbrev" '(diminish 'abbrev-mode))
 (eval-after-load "hs-minor-mode" '(diminish 'hs-minor-mode))
 
-(evil-jumper-mode t)
 (evil-mode t)
 (put 'dired-find-alternate-file 'disabled nil)
