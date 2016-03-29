@@ -120,8 +120,9 @@
 
 (use-package leuven-theme
   :ensure t
-  :init
-  (load-theme 'leuven t))
+  :config
+  (load-theme 'leuven t)
+  )
 
 ;; Tango Plus THEME
 ;; (use-package tango-plus-theme
@@ -132,17 +133,24 @@
 ;; DIRED
 (use-package dired
   :config
-  ; use the same buffer for navigation
+  ;; use the same buffer for navigation
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
   (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
   (global-set-key (kbd "<f7>") 'my/show-dired)
-)
+  )
 
 ;; TERM
 (use-package term
   :config
   ;; disable scroll-margin in term-mode to use the full screen
   (add-hook 'term-mode-hook (lambda () (interactive) (setq-local scroll-margin 0)))
+  )
+
+;; RAINBOW parentheses
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   )
 
 ;; ISPELL settings
