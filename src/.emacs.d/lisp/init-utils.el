@@ -92,8 +92,9 @@ Switch to home directory if the current buffer has now filename."
   ;; delete trailing whitespace before saving the file
   (add-to-list 'before-save-hook 'delete-trailing-whitespace)
   ;; enable line numbers
-  (linum-mode 1)
+  ;; (linum-mode 1)
   ;; enable code folding
-  (hs-minor-mode 1))
+  (fci-mode t)
+  (hs-minor-mode t))
 
 (provide 'init-utils)
