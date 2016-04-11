@@ -163,6 +163,13 @@
      (cl-callf color-saturate-name (face-foreground face) 40)))
   )
 
+;; Fill column indicator
+(use-package fill-column-indicator
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook #'fci-mode)
+  )
+
 ;; ISPELL settings
 ;; (setq ispell-dictionary "english")
 ;; (dolist (hook '(prog-mode-hook))
