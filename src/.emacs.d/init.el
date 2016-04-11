@@ -1,3 +1,10 @@
+;;; init.el --- My personal Emacs configuration
+;; Author: C.Maier
+;;; Commentary:
+;; "If I waited for perfection ... I would never write a word"
+;; Margaret Atwood
+
+;;; Code:
 ;; add "lisp" to the load-path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
@@ -244,3 +251,6 @@
 (eval-after-load "hs-minor-mode" '(diminish 'hs-minor-mode))
 
 (evil-mode t)
+
+(provide init)
+;;; init.el ends here

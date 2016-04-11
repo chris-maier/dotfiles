@@ -1,6 +1,9 @@
-;;
+;;; init-powerline.el --- Powerline configuration
+;; Author: C.Maier
+;;; Commentary:
 ;; Powerline provided by Aaron Bieber
 ;; see: https://github.com/aaronbieber/dotfiles
+;;; Code:
 
 (require-package 'powerline-evil)
 
@@ -88,3 +91,4 @@
 			     (powerline-render rhs)))))))
 
 (provide 'init-powerline)
+;;; init-powerline.el ends here

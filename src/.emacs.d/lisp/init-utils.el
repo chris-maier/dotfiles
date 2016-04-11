@@ -1,3 +1,9 @@
+;;; init-utils.el --- My personal functions
+;; Author: C.Maier
+;;; Commentary:
+;; My personal functions
+;;; Code:
+
 (require 'evil)
 ;; Required packages
 ;; - evil
@@ -6,6 +12,7 @@
 ;; - helm-projectile
 
 (defun my/move-text-internal (arg)
+  "Move lines ARG lines up or down."
   (cond
    ((and mark-active transient-mark-mode)
     (if (> (point) (mark))
@@ -29,14 +36,12 @@
       (move-to-column column t)))))
 
 (defun my/move-text-down (arg)
-  "Move region (transient-mark-mode active) or current line
-  arg lines down."
+  "Move region (transient-mark-mode active) or current line ARG lines down."
   (interactive "*p")
   (my/move-text-internal arg))
 
 (defun my/move-text-up (arg)
-  "Move region (transient-mark-mode active) or current line
-  arg lines up."
+  "Move region (transient-mark-mode active) or current line ARG lines up."
   (interactive "*p")
   (my/move-text-internal (- arg)))
 
@@ -54,7 +59,7 @@
 
 ;; FONT settings
 (defun my/font-set (myfont)
-  ;; My font settings
+  "My font settings."
   (interactive)
   (when (member myfont (font-family-list))
     (set-face-attribute 'default nil :font myfont))
@@ -62,14 +67,14 @@
 
 ;; CTAGS
 (defun my/create-tags (dir-name)
-  "Create tags file."
+  "Create tags file in DIR-NAME."
   (interactive "DDirectory: ")
   (shell-command
    (format "%s -e --extra=+fq -R %s" path-to-ctags (directory-file-name dir-name)))
 )
 
 (defun my/find-file ()
-  "Find file in current project, if we are not in a project we probably want to navigate to one"
+  "Find file in current project, if we are not in a project we probably want to navigate to one."
   (interactive)
   (if (projectile-project-p)
       (helm-projectile-find-file)
@@ -88,7 +93,7 @@ Switch to home directory if the current buffer has now filename."
 )
 
 (defun my/prog-mode-hooks ()
-  "Executed when switching to prog-mode"
+  "Executed when switching to prog-mode."
   ;; delete trailing whitespace before saving the file
   (add-to-list 'before-save-hook 'delete-trailing-whitespace)
   ;; enable line numbers
@@ -98,3 +103,4 @@ Switch to home directory if the current buffer has now filename."
   (hs-minor-mode t))
 
 (provide 'init-utils)
+;;; init-utils.el ends here

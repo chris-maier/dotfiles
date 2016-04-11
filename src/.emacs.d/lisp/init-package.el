@@ -1,6 +1,9 @@
-;;
+;;; init-package.el --- Package configuration
+;;; Commentary:
 ;; Package configuration provided by Aaron Bieber
 ;; see: https://github.com/aaronbieber/dotfiles
+;;; Code:
+;;
 
 (require 'package)
 
@@ -43,3 +46,4 @@ locate PACKAGE."
 (require 'cl-lib)
 
 (provide 'init-package)
+;;; init-package.el ends here

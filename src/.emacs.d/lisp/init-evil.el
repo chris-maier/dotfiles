@@ -1,4 +1,9 @@
-;; EVIL leader config
+;;; init-evil.el --- Evil configuration
+;; Author: C.Maier
+;;; Commentary:
+;; Evil configuration
+;;; Code:
+
 (require-package 'evil)
 (require-package 'evil-jumper)
 (require-package 'evil-leader)
@@ -9,7 +14,7 @@
 (require 'init-utils)
 
 (defun my/config-evil-leader ()
-  "Configure evil leader mode"
+  "Configure evil leader mode."
   (evil-leader/set-leader ",")
   (setq evil-leader/in-all-states t)
   (evil-leader/set-key
@@ -31,7 +36,7 @@
     ))
 
 (defun my/config-evil ()
-  "Configure evil mode"
+  "Configure evil mode."
 
   ;; Moving around
   (define-key evil-normal-state-map (kbd "l") '(lambda () (interactive) (evil-forward-char 1 t t)))
@@ -115,3 +120,4 @@
   (setq-default evil-escape-key-sequence "jk"))
 
 (provide 'init-evil)
+;;; init-evil.el ends here
