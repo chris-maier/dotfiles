@@ -170,6 +170,13 @@
   (add-hook 'prog-mode-hook #'fci-mode)
   )
 
+;; Flycheck everything
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook #'flycheck-mode)
+  )
+
 ;; ISPELL settings
 ;; (setq ispell-dictionary "english")
 ;; (dolist (hook '(prog-mode-hook))
