@@ -53,12 +53,11 @@
   :init
   (setq helm-buffers-fuzzy-matching t)
   (setq helm-recentf-fuzzy-match t)
-  :config
-  (helm-mode 1)
   (setq helm-autoresize-mode t)
   (setq helm-buffer-max-length 40)
+  (helm-mode 1)
   :bind (:map helm-find-files-map
-	      ("<C-backspace>" . backward-kill-word))
+  	      ("<C-backspace>" . backward-kill-word))
   )
 
 (use-package helm-projectile
@@ -67,13 +66,12 @@
   :init
   (setq helm-projectile-fuzzy-match t)
   ;; :commands (helm-projectile helm-projectile-switch-project)
-  :config
   (helm-projectile-on))
 
 (use-package projectile
   :ensure t
   ;; :defer t
-  :config
+  :init
   (projectile-global-mode)
   (setq projectile-enable-caching t)
   (setq projectile-completion-system 'helm))
@@ -123,7 +121,7 @@
 
 (use-package leuven-theme
   :ensure t
-  :config
+  :init
   (load-theme 'leuven t)
   )
 
@@ -140,6 +138,7 @@
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
   (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
   (global-set-key (kbd "<f7>") 'my/show-dired)
+  (put 'dired-find-alternate-file 'disabled nil)
   )
 
 ;; TERM
@@ -154,13 +153,14 @@
   :ensure t
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-  )
-
-;; TERM
-(use-package term
-  :config
-  ; disable scroll-margin in term-mode to use the full screen
-  (add-hook 'term-mode-hook (lambda () (interactive) (setq-local scroll-margin 0)))
+  ;; more color saturation
+  (require 'cl-lib)
+  (require 'color)
+  (cl-loop
+   for index from 1 to rainbow-delimiters-max-face-count
+   do
+   (let ((face (intern (format "rainbow-delimiters-depth-%d-face" index))))
+     (cl-callf color-saturate-name (face-foreground face) 40)))
   )
 
 ;; ISPELL settings
@@ -230,4 +230,3 @@
 (eval-after-load "hs-minor-mode" '(diminish 'hs-minor-mode))
 
 (evil-mode t)
-(put 'dired-find-alternate-file 'disabled nil)
