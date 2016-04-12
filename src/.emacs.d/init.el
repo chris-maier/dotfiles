@@ -252,5 +252,5 @@
 
 (evil-mode t)
 
-(provide init)
+(provide 'init)
 ;;; init.el ends here
