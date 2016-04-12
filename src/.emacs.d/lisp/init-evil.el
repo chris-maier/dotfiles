@@ -33,6 +33,9 @@
 
     ;; nerd-commenter
     "cc" 'evilnc-comment-or-uncomment-lines
+
+    ;; flycheck
+    "n" 'flycheck-next-error
     ))
 
 (defun my/config-evil ()

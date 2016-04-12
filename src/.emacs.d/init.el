@@ -46,10 +46,6 @@
 (require 'init-utils)
 (require 'init-lisp)
 
-;; MAGIT does need a 24.4 version of emacs
-;; MAGIT config
-;; (require-package 'magit)
-
 (require-package 'use-package)
 (require-package 'diminish)
 
@@ -58,13 +54,17 @@
   ;; :defer t
   :diminish helm-mode
   :init
-  (setq helm-buffers-fuzzy-matching t)
-  (setq helm-recentf-fuzzy-match t)
-  (setq helm-autoresize-mode t)
-  (setq helm-buffer-max-length 40)
   (helm-mode 1)
   :bind (:map helm-find-files-map
   	      ("<C-backspace>" . backward-kill-word))
+  :config
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-recentf-fuzzy-match t)
+  (setq helm-M-x-fuzzy-match t)
+  ;; (setq helm-locate-fuzzy-match t)
+  (setq helm-case-fold-search 'smart)
+  (setq helm-autoresize-mode t)
+  (setq helm-buffer-max-length 40)
   )
 
 (use-package helm-projectile
@@ -103,21 +103,33 @@
 ;;   (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet)
 ;; )
 
-;; (use-package company
-;;   :ensure t
-;;   ;; :defer 30
-;;   :init
-;;   (global-company-mode)
-;;   :config
-;;   (setq company-idle-delay nil)
-;;   (setq company-minimum-prefix-length 2)
-;;   (setq company-abort-manual-when-too-short t)
-;;   (setq company-selection-wrap-around t)
+(use-package company
+  :ensure t
+  :init
+  (global-company-mode)
+  ;; (define-key company-mode-map [tab] 'company-complete-common-or-cycle)
+  ;; (define-key company-active-map (kbd "C-n") 'company-select-next)
+  ;; (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  :config
+  (setq tab-always-indent 'complete)
 
-;;   (define-key company-mode-map [tab] 'company-complete-common-or-cycle)
-;;   (define-key company-active-map (kbd "C-n") 'company-select-next)
-;;   (define-key company-active-map (kbd "C-p") 'company-select-previous))
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 2)
+  (setq company-show-numbers nil)
+  (setq company-abort-manual-when-too-short nil)
+  (setq company-transformers '(company-sort-by-occurrence))
+  ;; (setq company-selection-wrap-around t
+        ;; company-tooltip-flip-when-above t
+        ;; company-tooltip-align-annotations t
+		;; )
 
+        ;; company-backends '((company-capf
+        ;;                     company-yasnippet
+        ;;                     ;; company-dabbrev-code
+        ;;                     company-files
+        ;;                     company-keywords)
+        ;;                    company-dabbrev))
+)
 
 ;; Zenburn THEME
 ;; (use-package zenburn-theme
@@ -184,6 +196,12 @@
   (add-hook 'prog-mode-hook #'flycheck-mode)
   )
 
+;; MAGIT
+;; (use-package 'magit
+;;   :if (eq system-type 'windows-nt)
+;;   :ensure t
+;;   )
+
 ;; ISPELL settings
 ;; (setq ispell-dictionary "english")
 ;; (dolist (hook '(prog-mode-hook))
@@ -246,6 +264,7 @@
 (eval-after-load "ElDoc" '(diminish 'eldoc-mode))
 (eval-after-load "Undo-Tree" '(diminish 'undo-tree-mode))
 ;; (eval-after-load "projectile" '(diminish 'projectile-mode))
+
 (eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode))
 (eval-after-load "Abbrev" '(diminish 'abbrev-mode))
 (eval-after-load "hs-minor-mode" '(diminish 'hs-minor-mode))
