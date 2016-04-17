@@ -5,11 +5,9 @@
 ;;; Code:
 
 (require 'evil)
-;; Required packages
-;; - evil
-;; - projectile
-;; - helm
-;; - helm-projectile
+;;(require 'projectile)
+;;(require 'helm)
+;;(require 'helm-projectile)
 
 (defun my/move-text-internal (arg)
   "Move lines ARG lines up or down."
@@ -59,7 +57,7 @@
 
 ;; FONT settings
 (defun my/font-set (myfont)
-  "My font settings."
+  "MYFONT is now the current font."
   (interactive)
   (when (member myfont (font-family-list))
     (set-face-attribute 'default nil :font myfont))
@@ -86,14 +84,14 @@
   "Create new buffer and open the directory structure of the current buffer.
 Switch to home directory if the current buffer has now filename."
   (interactive)
-  (setq buf (buffer-file-name))
-  (if buf
-      (dired (file-name-directory buf))
+  (defvar my/buf buffer-file-name)
+  (if my/buf
+      (dired (file-name-directory my/buf))
     (dired "~"))
 )
 
 (defun my/prog-mode-hooks ()
-  "Executed when switching to prog-mode."
+  "Executed when switching to programming mode."
   ;; delete trailing whitespace before saving the file
   (add-to-list 'before-save-hook 'delete-trailing-whitespace)
   ;; enable line numbers
