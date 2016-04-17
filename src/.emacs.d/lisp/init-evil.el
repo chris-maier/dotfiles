@@ -5,7 +5,6 @@
 ;;; Code:
 
 (require-package 'evil)
-(require-package 'evil-jumper)
 (require-package 'evil-leader)
 (require-package 'evil-numbers)
 (require-package 'evil-nerd-commenter)
@@ -89,8 +88,8 @@
 
   ;; Jumper Mode mappings
   (define-key evil-normal-state-map (kbd "C-+") 'evil-jump-to-tag)
-  (define-key evil-normal-state-map (kbd "C-o") 'evil-jumper/backward)
-  (define-key evil-normal-state-map (kbd "C-i") 'evil-jumper/forward)
+  (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward)
+  (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
 
   ;; Evil numbers mappings
   (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
@@ -108,10 +107,6 @@
   (global-evil-leader-mode)
   (my/config-evil-leader))
 
-(use-package evil-jumper
-  :ensure t
-  :config
-  (global-evil-jumper-mode))
 
 (use-package evil-escape
   :ensure t
