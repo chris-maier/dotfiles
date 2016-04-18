@@ -3,6 +3,7 @@
 ;;; Commentary:
 ;; "If I waited for perfection ... I would never write a word"
 ;; Margaret Atwood
+;; So I just start...
 
 ;;; Code:
 ;; add "lisp" to the load-path
@@ -38,16 +39,17 @@
 ;; remap yes-or-no questions
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+(require 'init-package)
+
+(require-package 'use-package)
+(require-package 'diminish)
+
 ;; Load personal lisp files
 ;; POWERLINE - Mode line customization
-(require 'init-package)
 (require 'init-powerline)
 (require 'init-evil)
 (require 'init-utils)
 (require 'init-lisp)
-
-(require-package 'use-package)
-(require-package 'diminish)
 
 (use-package helm
   :ensure t
@@ -68,6 +70,7 @@
   )
 
 (use-package helm-projectile
+  :after helm
   :ensure t
   ;; :defer t
   :init
@@ -105,31 +108,38 @@
 
 (use-package company
   :ensure t
+  :defer t
+  ;; :diminish company-mode
   :init
-  (global-company-mode)
-  ;; (define-key company-mode-map [tab] 'company-complete-common-or-cycle)
-  ;; (define-key company-active-map (kbd "C-n") 'company-select-next)
-  ;; (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (global-company-mode t)
   :config
-  (setq tab-always-indent 'complete)
+  (setq company-idle-delay              0.3 
+	company-minimum-prefix-length   2
+	company-show-numbers            nil
+	company-tooltip-limit           20
+	company-dabbrev-downcase        nil
+	company-backends                '((company-capf
+					   company-files
+					   company-clang
+					   company-gtags
+					   company-c-headers))
+	)
+  :bind ("C-;" . company-complete-common)
+  )
 
-  (setq company-idle-delay 0.1)
-  (setq company-minimum-prefix-length 2)
-  (setq company-show-numbers nil)
-  (setq company-abort-manual-when-too-short nil)
-  (setq company-transformers '(company-sort-by-occurrence))
-  ;; (setq company-selection-wrap-around t
-        ;; company-tooltip-flip-when-above t
-        ;; company-tooltip-align-annotations t
-		;; )
+(use-package company-c-headers
+  :after company
+  :ensure t
+  :config
+  (add-to-list 'company-c-headers-path-system "/usr/include/c++/4.8/")
+  )
 
-        ;; company-backends '((company-capf
-        ;;                     company-yasnippet
-        ;;                     ;; company-dabbrev-code
-        ;;                     company-files
-        ;;                     company-keywords)
-        ;;                    company-dabbrev))
-)
+(use-package company-jedi
+  :after company
+  :ensure t
+  :config
+  (lambda () (interactive)(add-hook 'python-mode-hook '(progn (add-to-list 'company-backend 'company-jedi))))
+  )
 
 ;; Zenburn THEME
 ;; (use-package zenburn-theme
@@ -192,6 +202,7 @@
 ;; Flycheck everything
 (use-package flycheck
   :ensure t
+  :diminish flycheck-mode
   :config
   (add-hook 'prog-mode-hook #'flycheck-mode)
   )
@@ -263,11 +274,16 @@
 ;; Diminish all other things around
 (eval-after-load "ElDoc" '(diminish 'eldoc-mode))
 (eval-after-load "Undo-Tree" '(diminish 'undo-tree-mode))
-;; (eval-after-load "projectile" '(diminish 'projectile-mode))
-
 (eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode))
 (eval-after-load "Abbrev" '(diminish 'abbrev-mode))
-(eval-after-load "hs-minor-mode" '(diminish 'hs-minor-mode))
+;; (eval-after-load "projectile" '(diminish 'projectile-mode))
+
+(use-package hideshow
+  :ensure t
+  :diminish hs-minor-mode
+  :config
+  (add-hook 'prog-mode-hook #'hs-minor-mode)
+  )
 
 (evil-mode t)
 
