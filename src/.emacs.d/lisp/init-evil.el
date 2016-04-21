@@ -68,24 +68,6 @@
   (define-key evil-normal-state-map (kbd "C-p") 'helm-projectile)
   (define-key evil-normal-state-map (kbd "C-S-P") 'helm-projectile-switch-project)
 
-  ;; ORG-Mode
-  (evil-define-key 'normal org-mode-map (kbd "C-S-l") 'org-shiftright)
-  (evil-define-key 'normal org-mode-map (kbd "C-S-h") 'org-shiftleft)
-  (evil-define-key 'insert org-mode-map (kbd "C-S-l") 'org-shiftright)
-  (evil-define-key 'insert org-mode-map (kbd "C-S-h") 'org-shiftleft)
-  ;; Move org element right
-  (evil-define-key 'normal org-mode-map (kbd "M-l") 'org-metaright)
-  (evil-define-key 'insert org-mode-map (kbd "M-l") 'org-metaright)
-  ;; Move org element left
-  (evil-define-key 'normal org-mode-map (kbd "M-h") 'org-metaleft)
-  (evil-define-key 'insert org-mode-map (kbd "M-h") 'org-metaleft)
-  ;; Move org element p
-  (evil-define-key 'normal org-mode-map (kbd "M-k") 'org-metaup)
-  (evil-define-key 'insert org-mode-map (kbd "M-k") 'org-metaup)
-  ;; Move org element down
-  (evil-define-key 'normal org-mode-map (kbd "M-j") 'org-metadown)
-  (evil-define-key 'insert org-mode-map (kbd "M-j") 'org-metadown)
-
   ;; Jumper Mode mappings
   (define-key evil-normal-state-map (kbd "C-+") 'evil-jump-to-tag)
   (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward)
@@ -99,23 +81,52 @@
   :ensure t
   :config
   (add-hook 'evil-mode-hook 'my/config-evil)
-  (evil-mode 1))
+  (evil-mode 1)
+  )
 
 (use-package evil-leader
+  :after evil
   :ensure t
   :config
   (global-evil-leader-mode)
-  (my/config-evil-leader))
-
+  (my/config-evil-leader)
+  )
 
 (use-package evil-escape
+  :after evil
   :ensure t
   :diminish evil-escape-mode
   :config
   (evil-escape-mode)
   (setq evil-escape-unordered-key-sequence t)
   (setq-default evil-escape-delay 0.2)
-  (setq-default evil-escape-key-sequence "jk"))
+  (setq-default evil-escape-key-sequence "jk")
+  )
+
+(use-package evil-smartparens
+  :after smartparens
+  :ensure t
+  :diminish evil-smartparens-mode
+  :init
+  (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
+  )
+
+(use-package evil-org
+  :after org
+  :ensure t
+  :diminish evil-org-mode
+  )
+
+(use-package evil-surround
+  :ensure t
+  :config (global-evil-surround-mode t)
+)
+
+;; Vim Tabs in Emacs - Needs more configuration
+;; (use-package evil-tabs
+;;   :ensure t
+;;   :config (global-evil-tabs-mode t)
+;; )
 
 (provide 'init-evil)
 ;;; init-evil.el ends here

@@ -12,13 +12,13 @@
 ;; try to improve slow performance on windows.
 (when (eq system-type 'windows-nt)
   (setq w32-get-true-file-attributes nil)
-)
+  )
 
 ;; Essential settings.
 ;; Disable the GUI stuff
 (setq inhibit-splash-screen t
-     inhibit-startup-message t
-     inhibit-startup-echo-area-message t)
+      inhibit-startup-message t
+      inhibit-startup-echo-area-message t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
@@ -28,12 +28,17 @@
 ;; Enable visual wrap lines
 (setq visual-line-mode)
 
-;; Scroll Margin
+;; Scrolling
 (setq scroll-margin 10)
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
+
+;; Follow symbolic links
+(setq vc-follow-symlinks t)
 
 ;; PAREN-MODE - display matching parentheses
-;(setq show-paren-style 'mixed)
-;(setq show-paren-delay 0.05)
+;;(setq show-paren-style 'mixed)
+;;(setq show-paren-delay 0.05)
 (show-paren-mode 1)
 
 ;; remap yes-or-no questions
@@ -58,8 +63,10 @@
   :init
   (helm-mode 1)
   :bind (:map helm-find-files-map
-  	      ("<C-backspace>" . backward-kill-word))
+	      ("<C-backspace>" . backward-kill-word))
   :config
+  ;; rebind tab to run persistent action
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
   (setq helm-buffers-fuzzy-matching t)
   (setq helm-recentf-fuzzy-match t)
   (setq helm-M-x-fuzzy-match t)
@@ -76,7 +83,8 @@
   :init
   (setq helm-projectile-fuzzy-match t)
   ;; :commands (helm-projectile helm-projectile-switch-project)
-  (helm-projectile-on))
+  (helm-projectile-on)
+  )
 
 (use-package projectile
   :ensure t
@@ -84,7 +92,8 @@
   :init
   (projectile-global-mode)
   (setq projectile-enable-caching t)
-  (setq projectile-completion-system 'helm))
+  (setq projectile-completion-system 'helm)
+  )
 
 ;; (use-package yasnippet
 ;;   :ensure t
@@ -113,7 +122,7 @@
   :init
   (global-company-mode t)
   :config
-  (setq company-idle-delay              0.3 
+  (setq company-idle-delay              0.3
 	company-minimum-prefix-length   2
 	company-show-numbers            nil
 	company-tooltip-limit           20
@@ -259,9 +268,9 @@
 
 ;; C Mode programming
 (setq c-default-style "linux"
-	  c-basic-offset 4
-	  tab-width 4
-	  indent-tabs-mode t)
+      c-basic-offset 4
+      tab-width 4
+      indent-tabs-mode t)
 
 ;; disable line split on org-meta-return
 (setq org-M-RET-may-split-line nil)
@@ -283,6 +292,25 @@
   :diminish hs-minor-mode
   :config
   (add-hook 'prog-mode-hook #'hs-minor-mode)
+  )
+
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode
+  :init
+  (add-hook 'prog-mode-hook #'smartparens-mode)
+  :config
+  (progn
+    (require 'smartparens-config)
+    )
+  )
+
+;; auto wrap around lines at 120 char
+(use-package simple
+  :diminish auto-fill-mode
+  :init
+  (setq-default fill-column 120)
+  (add-hook 'text-mode-hook #'auto-fill-mode)
   )
 
 (evil-mode t)
