@@ -24,6 +24,9 @@
     "w" 'save-buffer
     "k" 'kill-buffer
 
+    ;; invoke ibuffer
+    "i" 'ibuffer
+
     ;; switch buffers
     "s" 'helm-mini
     ;; find functions in this file
@@ -35,6 +38,7 @@
 
     ;; flycheck
     "n" 'flycheck-next-error
+    "p" 'flycheck-previous-error
     ))
 
 (defun my/config-evil ()
