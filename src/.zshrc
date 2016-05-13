@@ -53,6 +53,15 @@ setopt nolistbeep     # No bell on ambiguous completion!!
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+
+## Emacs:
+alias ec="emacsclient -c"          # Preferred
+alias ed="`which emacs` --daemon" # Start the daemon
+#alias emacs="`which emacs` -nw"   # Failsafe
+export EDITOR="emacsclient -t"
+export ALTERNATE_EDITOR=""
+export VISUAL="emacsclient -c"
+
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
