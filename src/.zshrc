@@ -55,7 +55,7 @@ setopt nolistbeep     # No bell on ambiguous completion!!
 #
 
 ## Emacs:
-alias ec="emacsclient -c"          # Preferred
+alias ec="emacsclient -c &"          # Preferred
 alias ed="`which emacs` --daemon" # Start the daemon
 #alias emacs="`which emacs` -nw"   # Failsafe
 export EDITOR="emacsclient -t"
