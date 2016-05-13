@@ -1,69 +1,101 @@
 #!/bin/bash
 
+set -x
+
 # this is a script to install all necessary programs
 # Copyright Chris Maier
 
+# Package definitions
+DEV=" clang cmake doxygen doxygen-docs graphviz mc wget curl git exuberant-ctags ksh g++"
+YOCTO=" gawk wget git-core diffstat unzip texinfo gcc-multilib build-essentials chrpath socat libsdl1.2-dev xterm"
+DESKTOP=" thunderbird revelation pdftk pwgen google-chrome-stable texlive-full"
+EMACS=" emacs-snapshot"
+VIM=" vim-gtk"
+ZSH=" zsh"
 
-function help (){
-    echo "$1 [-a|--all] [-t|--tiny]"
+#
+# Function definitions
+#
+
+function usage (){
+    echo "$1 [+dev] [+yocto] [+desktop] [+emacs] [+vim] [+zsh]"
+    exit 1
 }
 
-while [[ $# > 1 ]]
-do
-    case $1 in
-	-a|--all)
-	    DISTRO="full"
-	    shift # past argument
-	    ;;
-	-t|--tiny)
-	    DISTRO="tiny"
-	    shift # past argument
-	    ;;
-	*|-h|--help)
-	    help
-	    shift
-	    ;;
-    esac
-done
+function parse_args (){
+    while [[ $# > 0 ]]
+    do
+	case $1 in
+	    +dev)
+		PACKAGES+=$DEV
+		;;
+	    +yocto)
+		PACKAGES+=$YOCTO
+		;;
+	    +desktop)
+		PACKAGES+=$DESKTOP
+		;;
+	    +emacs)
+		install_emacs
+		;;
+	    +vim)
+		PACKAGES+=$VIM
+		;;
+	    +zsh)
+		install_zsh
+		;;
+	    *)
+		usage
+		;;
+	esac
+	shift
+    done
+}
 
-PACKAGES = "exuberant-ctags \
-	 ispell iamerican ingerman \
-	 graphviz \
-	 doxygen doxygen-doc \
-	 vim-gtk \
-	 mc \
-	 curl \
-	 git \
-	 zsh"
+function check_sudo (){
+    # Make sure only root can run our script
+    if [ "$(id -u)" != "0" ]; then
+	echo "This script must be run as root"
+	exit 1
+    fi
+}
 
-if [ $DISTRO == "full" ]
-then
-    PACKAGES += "texlive-full \
-    	     thunderbird \
-	     revelation \
-	     pdftk \
-	     pwgen \
-	     google-chrome-stable \
-	     clang \
-	     cmake "
-fi
+function install_emacs (){
+    add-apt-repository -y ppa:ubuntu-elisp
+    PACKAGES+=$EMACS
+}
 
+function install_zsh (){
+    # download and install oh-my-zsh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    PACKAGES+=$ZSH
+}
+
+function install_packages (){
+    # remove duplicates
+    PACKAGES=$(printf '%s\n' $PACKAGES | sort -u)
 # Install tools
-apt-get install --yes\
-	$PACKAGES
+    # apt-get update
+    # apt-get install --yes\ $PACKAGES
+    # apt-get upgrade --yes
+}
 
-add-apt-repository -y ppa:ubuntu-elisp
-apt-get update
-apt-get install emacs-snapshot
+function install_shortcuts (){
+    local MATE=$(which mate-terminal)
+    local GNOME=$(which gnome-terminal)
 
-# fix missing packages
-apt-get install -f
-apt-get update
-apt-get upgrade
+    if [ -n $MATE ]; then
+	ln -s $MATE /usr/bin/cmd
+    elif [ -n $GNOME ]; then
+	ln -s $GNOME /usr/bin/cmd
+    else
+	echo "No terminal shortcut set"
+    fi
+}
 
-#echo "Do forget to install Ghostery!!!"
-#read
-
-# Make a link between gnome-terminal and cmd.
-ln -s /usr/bin/gnome-terminal /usr/bin/cmd
-ln -fs /usr/bin/emacs-snapshot /usr/bin/emacs
+#
+# Main starts here
+check_sudo
+parse_args $*
+install_packages
+install_shortcuts
