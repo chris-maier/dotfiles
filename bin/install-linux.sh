@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 # this is a script to install all necessary programs
 # Copyright Chris Maier
 
@@ -12,6 +10,8 @@ DESKTOP=" thunderbird revelation pdftk pwgen google-chrome-stable texlive-full"
 EMACS=" emacs-snapshot"
 VIM=" vim-gtk"
 ZSH=" zsh"
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #
 # Function definitions
@@ -75,21 +75,27 @@ function install_packages (){
     # remove duplicates
     PACKAGES=$(printf '%s\n' $PACKAGES | sort -u)
 # Install tools
-    # apt-get update
-    # apt-get install --yes\ $PACKAGES
-    # apt-get upgrade --yes
+    apt-get update
+    apt-get install --yes\ $PACKAGES
+    apt-get upgrade --yes
 }
 
-function install_shortcuts (){
+function post_install (){
     local MATE=$(which mate-terminal)
     local GNOME=$(which gnome-terminal)
 
     if [ -n $MATE ]; then
-	ln -s $MATE /usr/bin/cmd
+    	ln -s $MATE /usr/bin/cmd
     elif [ -n $GNOME ]; then
-	ln -s $GNOME /usr/bin/cmd
+    	ln -s $GNOME /usr/bin/cmd
     else
-	echo "No terminal shortcut set"
+    	echo "No terminal shortcut set"
+    fi
+
+    # post install zsh
+    if [[ $PACKAGES =~ $ZSH ]]; then
+	chsh -s $(which zsh)
+	ln -s $SCRIPT_DIR/../src/.zshrc ~/.zshrc
     fi
 }
 
@@ -98,4 +104,4 @@ function install_shortcuts (){
 check_sudo
 parse_args $*
 install_packages
-install_shortcuts
+post_install
