@@ -4,8 +4,8 @@
 # Copyright Chris Maier
 
 # Package definitions
-DEV=" clang cmake doxygen doxygen-docs graphviz mc wget curl git exuberant-ctags ksh g++"
-YOCTO=" gawk wget git-core diffstat unzip texinfo gcc-multilib build-essentials chrpath socat libsdl1.2-dev xterm"
+DEV=" clang cmake doxygen doxygen-docs graphviz mc wget curl git exuberant-ctags ksh g++ subversion"
+YOCTO=" gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm"
 DESKTOP=" thunderbird revelation pdftk pwgen google-chrome-stable texlive-full"
 EMACS=" emacs-snapshot"
 VIM=" vim-gtk"
@@ -66,8 +66,6 @@ function install_emacs (){
 }
 
 function install_zsh (){
-    # download and install oh-my-zsh
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     PACKAGES+=$ZSH
 }
 
@@ -76,7 +74,7 @@ function install_packages (){
     PACKAGES=$(printf '%s\n' $PACKAGES | sort -u)
 # Install tools
     apt-get update
-    apt-get install --yes\ $PACKAGES
+    apt-get install $PACKAGES --yes
     apt-get upgrade --yes
 }
 
@@ -84,18 +82,29 @@ function post_install (){
     local MATE=$(which mate-terminal)
     local GNOME=$(which gnome-terminal)
 
+    local ZSH_BIN=$(which zsh)
+    local EMACS_BIN=$(which emacs)
+
     if [ -n $MATE ]; then
-    	ln -s $MATE /usr/bin/cmd
+	ln -fs $MATE /usr/bin/cmd
     elif [ -n $GNOME ]; then
-    	ln -s $GNOME /usr/bin/cmd
+	ln -fs $GNOME /usr/bin/cmd
     else
-    	echo "No terminal shortcut set"
+	echo "No terminal shortcut set"
     fi
 
     # post install zsh
-    if [[ $PACKAGES =~ $ZSH ]]; then
-	chsh -s $(which zsh)
-	ln -s $SCRIPT_DIR/../src/.zshrc ~/.zshrc
+    if [ -n $ZSH_BIN ]; then
+	# change login shell of current user, not root
+	chsh -s $(which zsh) $(logname)
+	# download and install oh-my-zsh
+	sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+	ln -fs $SCRIPT_DIR/../src/.zshrc ~/.zshrc
+    fi
+
+    # post install emacs
+    if [ -n $EMACS_BIN ]; then
+	ln -fs $SCRIPT_DIR/../src/.emacs.d ~/.emacs.d
     fi
 }
 
