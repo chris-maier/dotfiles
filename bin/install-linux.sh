@@ -16,6 +16,7 @@ ZSH=" zsh"
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+APT_GET_OPTIONS="--yes --show-progress --install-suggests --auto-remove"
 #
 # Function definitions
 #
@@ -91,7 +92,7 @@ function install_packages (){
 	PACKAGES=$(printf '%s\n' $PACKAGES | sort -u)
 	# Install tools
 	apt-get update
-	apt-get install $PACKAGES --yes
+	apt-get install $PACKAGES $APT_GET_OPTIONS
 	apt-get upgrade --yes
 }
 
