@@ -123,6 +123,10 @@ function install_neovim (){
 function post_install_neovim (){
 	local NEOVIM_BIN=$(which nvim)
 	local EDITOR_BIN=$(which editor)
+
+	# link the config files to ~/.config/neovim/
+	ln -fs $SCRIPT_DIR/../src/.config/nvim ~/.config/nvim/
+
 	# install as default editor
 	update-alternatives --install $EDITOR_BIN editor $NEOVIM_BIN 60
 }
