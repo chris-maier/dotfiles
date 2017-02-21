@@ -54,13 +54,12 @@ setopt nolistbeep     # No bell on ambiguous completion!!
 # For a full list of active aliases, run `alias`.
 #
 
-## Emacs:
-alias ec="emacsclient -c &"          # Preferred
-alias ed="`which emacs` --daemon" # Start the daemon
-#alias emacs="`which emacs` -nw"   # Failsafe
-export EDITOR="emacsclient -t"
+# NVIM shortcuts
+alias n="nvim"
+alias v="nvim -m"
+export EDITOR="nvim"
 export ALTERNATE_EDITOR=""
-export VISUAL="emacsclient -c"
+export VISUAL="nvim -m"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
