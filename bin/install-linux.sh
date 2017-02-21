@@ -4,7 +4,7 @@
 # Copyright Chris Maier
 
 # Package definitions
-TOOLS=" mc wget curl git git-core unzip pwgen exuberant-ctags" # always present
+TOOLS=" mc wget curl git git-core unzip pwgen exuberant-ctags silversearcher-ag xsel" # always present
 DEV=" clang cmake doxygen doxygen-docs graphviz mc wget curl git exuberant-ctags ksh g++ subversion"
 YOCTO=" gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm"
 DESKTOP=" thunderbird revelation pdftk pwgen google-chrome-stable texlive-full"
@@ -116,7 +116,7 @@ function post_install_emacs (){
 function install_neovim (){
 	# add ppa repository
 	add-apt-repository ppa:neovim-ppa/stable
-	# add packages 
+	# add packages
 	PACKAGES+=$NEOVIM
 }
 
@@ -151,39 +151,39 @@ function post_install_zsh ()
 
 function install_packages (){
 
-	if $OPT_BROWSER; then 
+	if $OPT_BROWSER; then
 		install_browser
 	fi
 
-	if $OPT_DESKTOP; then 
+	if $OPT_DESKTOP; then
 		PACKAGES+=$DESKTOP
 	fi
 
-	if $OPT_DEV; then 
+	if $OPT_DEV; then
 		PACKAGES+=$DEV
 	fi
 
-	if $OPT_EMACS; then 
+	if $OPT_EMACS; then
 		install_emacs
 	fi
 
-	if $OPT_NEOVIM; then 
+	if $OPT_NEOVIM; then
 		install_neovim
 	fi
 
-	if $OPT_TOOLS; then 
+	if $OPT_TOOLS; then
 		PACKAGES+=$TOOLS
 	fi
 
-	if $OPT_VIM; then 
+	if $OPT_VIM; then
 		PACKAGES+=$VIM
 	fi
 
-	if $OPT_YOCTO; then 
+	if $OPT_YOCTO; then
 		PACKAGES+=$YOCTO
 	fi
 
-	if $OPT_ZSH; then 
+	if $OPT_ZSH; then
 		install_zsh
 	fi
 
@@ -207,19 +207,19 @@ function post_install (){
 		echo "No terminal shortcut set"
 	fi
 
-	if $OPT_BROWSER; then 
+	if $OPT_BROWSER; then
 		post_install_browser
 	fi
 
-	if $OPT_EMACS; then 
+	if $OPT_EMACS; then
 		post_install_emacs
 	fi
 
-	if $OPT_NEOVIM; then 
+	if $OPT_NEOVIM; then
 		post_install_neovim
 	fi
 
-	if $OPT_ZSH; then 
+	if $OPT_ZSH; then
 		post_install_zsh
 	fi
 
