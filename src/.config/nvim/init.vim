@@ -3,7 +3,7 @@ let CONF_DIR = "~/.config/nvim/"
 let UNDO_DIR = CONF_DIR . "undo/"
 let BUNDLE_DIR = CONF_DIR . "bundle/"
 
-# CONFIGURATION FILES
+" CONFIGURATION FILES
 let PLUGINS_FILEPATH = CONF_DIR . "plugins.vim"
 let KEYMAPS_FILEPATH = CONF_DIR . "keymaps.vim"
 let SETTINGS_FILEPATH = CONF_DIR . "settings.vim"
