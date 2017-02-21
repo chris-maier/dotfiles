@@ -27,7 +27,7 @@ OPT_ZSH=false
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-APT_GET_OPTIONS="--yes --show-progress --install-suggests --auto-remove -n"
+APT_GET_OPTIONS="--yes --show-progress --install-suggests --auto-remove"
 #
 # Function definitions
 #
@@ -142,7 +142,7 @@ function post_install_zsh ()
 	# post install zsh
 	if [ -n $ZSH_BIN ]; then
 		# change login shell of current user, not root
-		chsh -s $ZSH_BIN $(logname)
+		chsh -s $ZSH_BIN $SUDO_USER
 		# download and install oh-my-zsh
 		sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 		ln -fs $SCRIPT_DIR/../src/.zshrc ~/.zshrc
@@ -151,39 +151,39 @@ function post_install_zsh ()
 
 function install_packages (){
 
-	if [$OPT_BROWSER = true]; then 
+	if $OPT_BROWSER; then 
 		install_browser
 	fi
 
-	if [$OPT_DESKTOP = true]; then 
+	if $OPT_DESKTOP; then 
 		PACKAGES+=$DESKTOP
 	fi
 
-	if [$OPT_DEV = true]; then 
+	if $OPT_DEV; then 
 		PACKAGES+=$DEV
 	fi
 
-	if [$OPT_EMACS = true]; then 
+	if $OPT_EMACS; then 
 		install_emacs
 	fi
 
-	if [$OPT_NEOVIM = true]; then 
+	if $OPT_NEOVIM; then 
 		install_neovim
 	fi
 
-	if [$OPT_TOOLS = true]; then 
+	if $OPT_TOOLS; then 
 		PACKAGES+=$TOOLS
 	fi
 
-	if [$OPT_VIM = true]; then 
+	if $OPT_VIM; then 
 		PACKAGES+=$VIM
 	fi
 
-	if [$OPT_YOCTO = true]; then 
+	if $OPT_YOCTO; then 
 		PACKAGES+=$YOCTO
 	fi
 
-	if [$OPT_ZSH = true]; then 
+	if $OPT_ZSH; then 
 		install_zsh
 	fi
 
@@ -207,19 +207,19 @@ function post_install (){
 		echo "No terminal shortcut set"
 	fi
 
-	if [$OPT_BROWSER = true]; then 
+	if $OPT_BROWSER; then 
 		post_install_browser
 	fi
 
-	if [$OPT_EMACS = true]; then 
+	if $OPT_EMACS; then 
 		post_install_emacs
 	fi
 
-	if [$OPT_NEOVIM = true]; then 
+	if $OPT_NEOVIM; then 
 		post_install_neovim
 	fi
 
-	if [$OPT_ZSH = true]; then 
+	if $OPT_ZSH; then 
 		post_install_zsh
 	fi
 
