@@ -14,9 +14,20 @@ VIM=" vim-gtk"
 NEOVIM=" neovim python-dev python-pip python3-dev python3-pip"
 ZSH=" zsh"
 
+# option flags
+OPT_TOOLS=true
+OPT_DEV=false
+OPT_YOCTO=false
+OPT_DESKTOP=false
+OPT_EMACS=false
+OPT_BROWSER=false
+OPT_VIM=false
+OPT_NEOVIM=false
+OPT_ZSH=false
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-APT_GET_OPTIONS="--yes --show-progress --install-suggests --auto-remove"
+APT_GET_OPTIONS="--yes --show-progress --install-suggests --auto-remove -n"
 #
 # Function definitions
 #
@@ -31,27 +42,35 @@ function parse_args (){
 	do
 		case $1 in
 			+dev)
+				OPT_DEV=true
 				PACKAGES+=$DEV
 				;;
 			+yocto)
+				OPT_YOCTO=true
 				PACKAGES+=$YOCTO
 				;;
 			+desktop)
+				OPT_DESKTOP=true
 				PACKAGES+=$DESKTOP
 				;;
 			+emacs)
+				OPT_EMACS=true
 				install_emacs
 				;;
 			+neovim)
+				OPT_NEOVIM=true
 				install_neovim
 				;;
 			+vim)
+				OPT_VIM=true
 				PACKAGES+=$VIM
 				;;
 			+browser)
+				OPT_BROWSER=true
 				install_browser
 				;;
 			+zsh)
+				OPT_ZSH=true
 				install_zsh
 				;;
 			*)
@@ -71,11 +90,14 @@ function check_sudo (){
 }
 
 function install_browser (){
-	update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/google-chrome 60
-
 	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 	echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 	PACKAGES+=$BROWSER
+}
+
+function post_install_browser (){
+	local BROWSER_BIN=$(which $BROWSER)
+	update-alternatives --install /usr/bin/x-www-browser x-www-browser $BROWSER_BIN 60
 }
 
 function install_emacs (){
@@ -83,42 +105,35 @@ function install_emacs (){
 	PACKAGES+=$EMACS
 }
 
-function install_zsh (){
-	PACKAGES+=$ZSH
-}
-
-function install_packages (){
-	# remove duplicates
-	PACKAGES=$(printf '%s\n' $PACKAGES | sort -u)
-	# Install tools
-	apt-get update
-	apt-get install $PACKAGES $APT_GET_OPTIONS
-	apt-get upgrade --yes
+function post_install_emacs (){
+	local EMACS_BIN=$(which emacs)
+	# post install emacs
+	if [ -n $EMACS_BIN ]; then
+		ln -fs $SCRIPT_DIR/../src/.emacs.d ~/.emacs.d
+	fi
 }
 
 function install_neovim (){
 	# add ppa repository
 	add-apt-repository ppa:neovim-ppa/stable
-	# install as default editor
-	update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 	# add packages 
 	PACKAGES+=$NEOVIM
 }
 
-function post_install (){
-	local MATE=$(which mate-terminal)
-	local GNOME=$(which gnome-terminal)
+function post_install_neovim (){
+	local NEOVIM_BIN=$(which nvim)
+	local EDITOR_BIN=$(which editor)
+	# install as default editor
+	update-alternatives --install $EDITOR_BIN editor $NEOVIM_BIN 60
+}
 
+function install_zsh (){
+	PACKAGES+=$ZSH
+}
+
+function post_install_zsh ()
+{
 	local ZSH_BIN=$(which zsh)
-	local EMACS_BIN=$(which emacs)
-
-	if [ -n $MATE ]; then
-		ln -fs $MATE /usr/bin/cmd
-	elif [ -n $GNOME ]; then
-		ln -fs $GNOME /usr/bin/cmd
-	else
-		echo "No terminal shortcut set"
-	fi
 
 	# post install zsh
 	if [ -n $ZSH_BIN ]; then
@@ -128,11 +143,82 @@ function post_install (){
 		sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 		ln -fs $SCRIPT_DIR/../src/.zshrc ~/.zshrc
 	fi
+}
 
-	# post install emacs
-	if [ -n $EMACS_BIN ]; then
-		ln -fs $SCRIPT_DIR/../src/.emacs.d ~/.emacs.d
+function install_packages (){
+
+	if [$OPT_BROWSER = true]; then 
+		install_browser
 	fi
+
+	if [$OPT_DESKTOP = true]; then 
+		PACKAGES+=$DESKTOP
+	fi
+
+	if [$OPT_DEV = true]; then 
+		PACKAGES+=$DEV
+	fi
+
+	if [$OPT_EMACS = true]; then 
+		install_emacs
+	fi
+
+	if [$OPT_NEOVIM = true]; then 
+		install_neovim
+	fi
+
+	if [$OPT_TOOLS = true]; then 
+		PACKAGES+=$TOOLS
+	fi
+
+	if [$OPT_VIM = true]; then 
+		PACKAGES+=$VIM
+	fi
+
+	if [$OPT_YOCTO = true]; then 
+		PACKAGES+=$YOCTO
+	fi
+
+	if [$OPT_ZSH = true]; then 
+		install_zsh
+	fi
+
+	# remove duplicates
+	PACKAGES=$(printf '%s\n' $PACKAGES | sort -u)
+	# Install tools
+	apt-get update
+	apt-get install $PACKAGES $APT_GET_OPTIONS
+	apt-get upgrade --yes
+}
+
+function post_install (){
+	local MATE=$(which mate-terminal)
+	local GNOME=$(which gnome-terminal)
+
+	if [ -n $MATE ]; then
+		ln -fs $MATE /usr/bin/cmd
+	elif [ -n $GNOME ]; then
+		ln -fs $GNOME /usr/bin/cmd
+	else
+		echo "No terminal shortcut set"
+	fi
+
+	if [$OPT_BROWSER = true]; then 
+		post_install_browser
+	fi
+
+	if [$OPT_EMACS = true]; then 
+		post_install_emacs
+	fi
+
+	if [$OPT_NEOVIM = true]; then 
+		post_install_neovim
+	fi
+
+	if [$OPT_ZSH = true]; then 
+		post_install_zsh
+	fi
+
 }
 
 #
