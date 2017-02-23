@@ -4,10 +4,12 @@
 ;; My personal functions
 ;;; Code:
 
+(require 'company)
+(require 'company-jedi)
 (require 'evil)
-;;(require 'projectile)
-;;(require 'helm)
-;;(require 'helm-projectile)
+(require 'helm)
+(require 'helm-projectile)
+(require 'projectile)
 
 (defun my/move-text-internal (arg)
   "Move lines ARG lines up or down."
@@ -99,6 +101,12 @@ Switch to home directory if the current buffer has now filename."
   ;; enable code folding
   (fci-mode t)
   (hs-minor-mode t))
+
+(defun my/python-mode-hooks()
+  "Python mode settings."
+  (add-to-list 'company-backends 'company-jedi)
+  (setq jedi:tooltip-method nil)
+  )
 
 (provide 'init-utils)
 ;;; init-utils.el ends here

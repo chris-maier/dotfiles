@@ -181,7 +181,8 @@ autocmd BufWritePre *.h,*.hpp,*.c,*.cpp,*.h++,*.c++,*.tex,*.py :call StripTraili
 " set the fileencoding to utf-8 before write to a source file
 autocmd BufReadPost *.h,*.hpp,*.c,*.cpp,*.c++ :set fileencoding=utf-8
 " Save on focus lost
-autocmd FocusLost * :wa 
+" autocmd FocusLost *.* :wa 
 
 " Start AutoClose on source files
 "autocmd BufWritePre *.tex,*.c,*.py,*.js,*.html,*.php,*.wiki,*.cpp,*.h :AutoCloseOn
+        

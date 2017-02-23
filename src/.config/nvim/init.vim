@@ -26,7 +26,6 @@ exe 'set undodir=' . g:undo_dir
 set undofile
 set undolevels=10000
 
-set title
 set history=500                 " remember more commands and search history
 "set wildignore=*.swp,*.bak,*.pyc,*.class
 

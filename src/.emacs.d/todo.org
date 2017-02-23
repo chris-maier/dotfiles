@@ -1,12 +1,17 @@
 * Emacs configuartion
 
+** Projectile
+*** kill all buffers for project
 ** DONE Backup and History
 ** DONE No Error on move actions
 ** DONE Transpose lines in evil mode
 ** DONE Yasnippets
 ** TODO Company
-** TODO Flycheck
+** TODO flycheck
 ** TODO Python Mode
+*** Jedi/epc
+**** auto-complete
+**** projectile
 ** TODO C++ Mode
 *** DONE Code folding
 ** TODO Grep/Silver surfer

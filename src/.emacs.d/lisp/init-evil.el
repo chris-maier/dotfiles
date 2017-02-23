@@ -74,12 +74,19 @@
 
   ;; Jumper Mode mappings
   (define-key evil-normal-state-map (kbd "C-+") 'evil-jump-to-tag)
-  (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward)
   (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
+  (define-key evil-normal-state-map (kbd "C-o") 'evil-jump-backward)
 
   ;; Evil numbers mappings
   (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
-  (define-key evil-normal-state-map (kbd "C-y") 'evil-numbers/dec-at-pt))
+  (define-key evil-normal-state-map (kbd "C-y") 'evil-numbers/dec-at-pt)
+
+  ;; Special Function keys
+
+
+
+
+  )
 
 (use-package evil
   :ensure t

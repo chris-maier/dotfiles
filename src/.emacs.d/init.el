@@ -35,6 +35,9 @@
 ;; Enable visual wrap lines
 (setq visual-line-mode t)
 
+;; refresh files
+(global-auto-revert-mode t)
+
 ;; Scrolling
 (setq scroll-margin 10)
 (setq scroll-step 1)
@@ -122,59 +125,57 @@
 ;;   (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet)
 ;; )
 
-(use-package company
-  :ensure t
-  :defer t
-  ;; :diminish company-mode
-  :init
-  (global-company-mode t)
-  :config
-  (setq company-idle-delay              0.3
-	company-minimum-prefix-length   2
-	company-show-numbers            nil
-	company-tooltip-limit           20
-	company-dabbrev-downcase        nil
-	company-backends                '((company-capf
-					   company-files
-					   company-clang
-					   company-gtags
-					   company-c-headers))
-	)
-  :bind ("C-;" . company-complete-common)
-  )
+;; (use-package company
+;;   :ensure t
+;;   :defer t
+;;   ;; :diminish company-mode
+;;   :init
+;;   (global-company-mode t)
+;;   :config
+;;   (setq company-idle-delay              0.3
+;; 	company-minimum-prefix-length   2
+;; 	company-show-numbers            nil
+;; 	company-tooltip-limit           20
+;; 	company-dabbrev-downcase        nil
+;; 	company-backends                '(company-capf
+;; 					  company-files
+;; 					  company-clang
+;; 					  company-gtags
+;; 					  company-c-headers)
+;; 	)
+;;   :bind ("C-;" . company-complete-common)
+;;   )
 
-(use-package company-c-headers
-  :after company
-  :ensure t
-  :config
-  (add-to-list 'company-c-headers-path-system "/usr/include/c++/4.8/")
-  )
+;; (use-package company-c-headers
+;;   :after company
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'company-c-headers-path-system "/usr/include/c++/4.8/")
+;;   )
 
-(use-package company-jedi
-  :after company
-  :ensure t
-  :config
-  (lambda () (interactive)(add-hook 'python-mode-hook '(progn (add-to-list 'company-backend 'company-jedi))))
-  )
+;; (use-package company-jedi
+;;   :after company
+;;   :ensure t
+;;   )
 
 ;; Zenburn THEME
 ;; (use-package zenburn-theme
 ;;   :ensure t
 ;;   :init
-;;   (load-theme 'zenburn t)
-;; ;;   :defer t)
+;;   (load-theme 'zenburn t))
+;;   :defer t)
 
-(use-package leuven-theme
-  :ensure t
-  :init
-  (load-theme 'leuven t)
-  )
-
-;; Tango Plus THEME
-;; (use-package tango-plus-theme
+;; (use-package leuven-theme
 ;;   :ensure t
 ;;   :init
-;;   (load-theme 'tango-plus t))
+;;   (load-theme 'leuven t)
+;;   )
+
+;; Tango Plus THEME
+(use-package tango-plus-theme
+  :ensure t
+  :init
+  (load-theme 'tango-plus t))
 
 ;; DIRED
 (use-package dired
@@ -182,7 +183,6 @@
   ;; use the same buffer for navigation
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
   (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
-  (global-set-key (kbd "<f7>") 'my/show-dired)
   (put 'dired-find-alternate-file 'disabled nil)
   )
 
@@ -197,7 +197,7 @@
 (use-package rainbow-delimiters
   :ensure t
   :config
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
   ;; more color saturation
   (require 'cl-lib)
   (require 'color)
@@ -233,6 +233,15 @@
 ;; (setq ispell-dictionary "english")
 ;; (dolist (hook '(prog-mode-hook))
 ;;   (add-hook hook 'flyspell-prog-mode))
+
+;; ELPY - Python environment
+(use-package elpy
+  :ensure t
+  :config
+  (elpy-enable)
+  ;; (elpy-clean-modeline) ; clean modeline
+  )
+
 
 ;; BACKUP
 (defvar backup-dir "~/.emacs.d/backups/")
@@ -272,6 +281,7 @@
 
 ;; Programming Mode
 (add-hook 'prog-mode-hook 'my/prog-mode-hooks)
+(add-hook 'python-mode-hook 'my/python-mode-hooks)
 
 ;; C Mode programming
 (setq c-default-style "linux"
@@ -320,7 +330,53 @@
   (add-hook 'text-mode-hook #'auto-fill-mode)
   )
 
+;; special function keys
+(global-set-key (kbd "<f2>") 'compile)
+;; (global-set-key (kbd "<f3>") ') ; generate ctags
+;; (global-set-key (kbd "<f4>") ') ; grep everything
+;; (global-set-key (kbd "<f6>") ') ; Tagbar toggle
+(global-set-key (kbd "<f7>") 'my/show-dired)
+;; (global-set-key (kbd "<f8>") ') ; Move through tag list
+;; (global-set-key (kbd "<f9>") ') ; hex mode
+;; (global-set-key (kbd "<f10>") ') ; make session
+;; (global-set-key (kbd "<f11>") ') ; load session
+;; (global-set-key (kbd "<f12>") ') ; reformat (c) files
+
+;; generate ctags
+;; reformat everything with astyle
+;; build Makefile or Ninja
+;; visual grep
+;; hexmode
+;; toggle slashs
+;; strip trailing whitespace
+;; matchit
+;; tagbar
+;; a.vim - switch between c and header - map <c-tab>
+;; <c-space> - for backward search
+;; <leader><space> - disable highlighting search
+;; split screens
+;;map <leader>sp :sp
+;;map <leader>vs :100vs
+
 (evil-mode t)
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("80ceeb45ccb797fe510980900eda334c777f05ee3181cb7e19cd6bb6fc7fda7c" default)))
+ '(elpy-rpc-backend "jedi")
+ '(package-selected-packages
+   (quote
+    (color-theme-x color-theme-solarized color-theme zenburn-theme tango-plus-theme use-package rainbow-delimiters powerline-evil leuven-theme helm-projectile flycheck fill-column-indicator evil-surround evil-smartparens evil-org evil-numbers evil-nerd-commenter evil-escape elisp-slime-nav company-jedi company-c-headers))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
