@@ -1,14 +1,14 @@
 " DIRECTORIES
-let CONF_DIR = "~/.config/nvim/"
-let UNDO_DIR = CONF_DIR . "undo/"
-let BUNDLE_DIR = CONF_DIR . "bundle/"
+let g:conf_dir = expand("~/.config/nvim/")
+let g:undo_dir = g:conf_dir . "undo/"
+let g:bundle_dir = g:conf_dir . "bundle/"
+let g:vundle_dir = g:bundle_dir . "Vundle.vim"
 
 " CONFIGURATION FILES
-let PLUGINS_FILEPATH = CONF_DIR . "plugins.vim"
-let KEYMAPS_FILEPATH = CONF_DIR . "keymaps.vim"
-let SETTINGS_FILEPATH = CONF_DIR . "settings.vim"
-let FUNCTIONS_FILEPATH = CONF_DIR . "functions.vim"
-let VUNDLE_FILEPATH = BUNDLE_DIR . "Vundle.vim"
+let g:plugins_file = g:conf_dir . "plugins.vim"
+let g:keymaps_file = g:conf_dir . "keymaps.vim"
+let g:settings_file = g:conf_dir . "settings.vim"
+let g:functions_file = g:conf_dir . "functions.vim"
 
 if &compatible
 	set nocompatible
@@ -22,12 +22,12 @@ filetype plugin indent on
 syntax enable
 syntax on
 
-let &undodir=UNDO_DIR
+exe 'set undodir=' . g:undo_dir
 set undofile
-set undolevels=1000
+set undolevels=10000
 
 set title
-"set history=500                 " remember more commands and search history
+set history=500                 " remember more commands and search history
 "set wildignore=*.swp,*.bak,*.pyc,*.class
 
 set scroll=10
@@ -46,8 +46,8 @@ set relativenumber
 set mouse=a
 
 " =============== Homemade functions ===============
-if filereadable (expand (FUNCTIONS_FILEPATH))
-	execute "source" FUNCTIONS_FILEPATH
+if filereadable (expand (g:functions_file))
+	execute "source" g:functions_file 
 endif
 
 augroup my_python
@@ -56,16 +56,16 @@ augroup my_python
 augroup END
 
 " =============== Plugin Manager ===============
-if filereadable (expand (PLUGINS_FILEPATH))
-	execute "source" PLUGINS_FILEPATH
+if filereadable (expand (g:plugins_file))
+	execute "source" g:plugins_file 
 endif
 
 " =============== Plugin Settings ===============
-if filereadable (expand (SETTINGS_FILEPATH))
-	execute "source" SETTINGS_FILEPATH
+if filereadable (expand (g:settings_file))
+	execute "source" g:settings_file 
 endif
 
 " =============== Key Mappings ===============
-if filereadable (expand (KEYMAPS_FILEPATH))
-	execute "source" KEYMAPS_FILEPATH
+if filereadable (expand (g:keymaps_file))
+	execute "source" g:keymaps_file 
 endif

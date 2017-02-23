@@ -1,9 +1,23 @@
-" set the runtime path to include Vundle and initialize
-set runtimepath+=~/.config/nvim/bundle/Vundle.vim
+" Setting up Vundle - The Vim Plugin Bundler
+let vundleAlreadyExists=1
+let vundle_readme=g:vundle_dir . "/README.md"
 
-call vundle#begin('~/.config/nvim/bundle')
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+if !filereadable(vundle_readme)
+    echo "Installing Vundle..."
+    if isdirectory(g:bundle_dir) == 0
+        call mkdir(g:bundle_dir, 'p')
+    endif
+    execute 'silent !git clone https://github.com/VundleVim/Vundle.vim "' . g:vundle_dir . '"'
+    let vundleAlreadyExists=0
+endif
+ 
+" set the runtime path to include Vundle and initialize
+exe 'set rtp+=' . g:vundle_dir
+
+call vundle#begin(g:bundle_dir)
+	" let Vundle manage Vundle, required
+	Plugin 'gmarik/Vundle.vim'
+
 
 " === Style ============
 Plugin 'flazz/vim-colorschemes'
@@ -102,6 +116,13 @@ Plugin 'scrooloose/nerdcommenter'
 "Plugin 'Shougo/neosnippet.vim'
 "Plugin 'Shougo/neosnippet-snippets'
 "Plugin 'SirVer/ultisnips'
+
+" Installing plugins the first time
+if vundleAlreadyExists == 0
+    " Executing below line Causes Vim to crash.
+    " The bug has been reported @ https://github.com/gmarik/vundle/issues/275
+    execute 'PluginInstall'
+endif
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
