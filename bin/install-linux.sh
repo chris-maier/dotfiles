@@ -223,6 +223,8 @@ function post_install (){
 		post_install_zsh
 	fi
 
+	# link the Midnight commander config files 
+	ln -fs $SCRIPT_DIR/../src/.config/mc ~/.config/
 }
 
 #
