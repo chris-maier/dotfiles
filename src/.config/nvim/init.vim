@@ -44,6 +44,9 @@ set relativenumber
 " activate mouse usage
 set mouse=a
 
+" move over line endings
+set whichwrap+=<,>,h,l,[,]
+
 " =============== Homemade functions ===============
 if filereadable (expand (g:functions_file))
 	execute "source" g:functions_file
