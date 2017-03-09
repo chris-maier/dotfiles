@@ -18,9 +18,9 @@ let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
 " Required:
-filetype plugin indent on
-syntax enable
 syntax on
+syntax enable
+filetype plugin indent on
 
 exe 'set undodir=' . g:undo_dir
 set undofile
@@ -60,6 +60,10 @@ augroup END
 augroup my_vim
 	autocmd BufWritePre *.vim call StripTrailingWhitespaces()
 	autocmd BufWritePre, BufRead *.vim call ReindentFile()
+augroup END
+
+augroup my_org
+	autocmd BufEnter *.org set ft=org
 augroup END
 
 " =============== Plugin Manager ===============
