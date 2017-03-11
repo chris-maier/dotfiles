@@ -196,3 +196,8 @@ export VISUAL="nvim -m"
 alias serve='python -m SimpleHTTPServer 8000'
 
 alias cd..="cd .." # I often make this mistake
+
+# personal shortcuts 
+alias cmaPassFile='revelation /home/chris/Dokumente/Accounts/passwords &'
+alias cmaPassPrivate='truecrypt /home/chris/Dokumente/private &'
+
