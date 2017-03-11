@@ -11,6 +11,12 @@ let g:mapleader = ","
 map <leader>w :update<cr>
 map <leader>q :wq!<cr>
 
+" prevent typos
+command WQ wq
+command Wq wq
+command W w
+command Q q
+
 " fast closing
 "nmap <C-q> :q!<cr>
 
@@ -18,11 +24,11 @@ map <leader>q :wq!<cr>
 map j gj
 map k gk
 
-" map ESC  
+" map ESC
 imap jk <Esc>
 imap kj <Esc>
 
-" Align blocks and keep them selected 
+" Align blocks and keep them selected
 vmap < <gv
 vmap > >gv
 
@@ -73,7 +79,7 @@ imap <C-l> <C-Right>
 map <C-h> B
 imap <C-h> <C-Left>
 
-" Delete whole words 
+" Delete whole words
 "imap <C-BS> <C-W>
 imap <C-DEL> <C-o>dw
 map  <C-Del> dw
@@ -123,7 +129,7 @@ map <leader>s? z=
 map <F2> :call Build() <CR>
 
 " generate ctags
-map <F3> :call GenCtags () <CR> 
+map <F3> :call GenCtags () <CR>
 
 " GREP OPTIONS ignore case
 noremap <F4> :call GrepVisualOperator(mode(), "i")<RETURN>
