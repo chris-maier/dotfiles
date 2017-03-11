@@ -4,15 +4,17 @@
 # Copyright Chris Maier
 
 # Package definitions
-TOOLS=" mc wget curl git git-core unzip pwgen exuberant-ctags silversearcher-ag xsel" # always present
-DEV=" clang cmake doxygen doxygen-docs graphviz mc wget curl git exuberant-ctags ksh g++ subversion"
-YOCTO=" gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm"
-DESKTOP=" thunderbird revelation pdftk pwgen google-chrome-stable texlive-full"
+TOOLS=" mc wget curl git git-core unzip pwgen exuberant-ctags silversearcher-ag xsel"
+DEV=" clang cmake doxygen doxygen-docs graphviz mc exuberant-ctags ksh g++ subversion"
+YOCTO=" gawk git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm"
+DESKTOP=" revelation pdftk texlive-full"
 EMACS=" emacs-snapshot"
 BROWSER=" google-chrome-stable"
 VIM=" vim-gtk"
-NEOVIM=" neovim python-dev python-pip python3-dev python3-pip"
+NEOVIM=" neovim python-dev python-pip python3-dev python3-pip python-setuptools python3-setuptools"
 ZSH=" zsh"
+TRUECRYPT=" truecrypt"
+VIRTUALBOX=" virtualbox virtualbox-qt"
 
 # option flags
 OPT_TOOLS=true
@@ -24,16 +26,36 @@ OPT_BROWSER=false
 OPT_VIM=false
 OPT_NEOVIM=false
 OPT_ZSH=false
+OPT_TRUECRPYT=false
+OPT_VIRTUALBOX=false
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_USER=$SUDO_USER
 
-APT_GET_OPTIONS="--yes --show-progress --install-suggests --auto-remove"
+APT_GET_OPTIONS="--yes --show-progress --auto-remove"
+#APT_GET_OPTIONS="-s"
+
+#
+# Logging
+#
+LOGFILE=$(date +"%Y-%m-%d").log
+# this function prints to STDERR
+echoerr() { printf "%s\n" "$*" >&2; }
+echodebug()
+{
+	if [ -n ${VERBOSE+x} ]; then
+		printf "%s\n" "$*" >&2
+	fi
+}
+
+exec > $LOGFILE
+
 #
 # Function definitions
 #
 
 function usage (){
-	echo "$1 [+dev] [+yocto] [+desktop] [+emacs] [+vim] [+neovim] [+broswer] [+zsh]"
+	echoerr "$1 [+dev] [+truecrypt] [+yocto] [+desktop] [+emacs] [+vim] [+virtualbox] [+neovim] [+broswer] [+zsh] [-v|--verbose]"
 	exit 1
 }
 
@@ -43,35 +65,40 @@ function parse_args (){
 		case $1 in
 			+dev)
 				OPT_DEV=true
-				PACKAGES+=$DEV
 				;;
 			+yocto)
 				OPT_YOCTO=true
-				PACKAGES+=$YOCTO
 				;;
 			+desktop)
 				OPT_DESKTOP=true
-				PACKAGES+=$DESKTOP
+				OPT_TRUECRYPT=true
+				OPT_VIRTUALBOX=true
+				OPT_BROWSER=true
+				OPT_ZSH=true
 				;;
 			+emacs)
 				OPT_EMACS=true
-				install_emacs
 				;;
 			+neovim)
 				OPT_NEOVIM=true
-				install_neovim
 				;;
 			+vim)
 				OPT_VIM=true
-				PACKAGES+=$VIM
 				;;
 			+browser)
 				OPT_BROWSER=true
-				install_browser
 				;;
 			+zsh)
 				OPT_ZSH=true
-				install_zsh
+				;;
+			+truecrypt)
+				OPT_TRUECRYPT=true
+				;;
+			+virtualbox)
+				OPT_VIRTUALBOX=true
+				;;
+			-v|--verbose)
+				VERBOSE=true
 				;;
 			*)
 				usage
@@ -81,77 +108,127 @@ function parse_args (){
 	done
 }
 
-function check_sudo (){
+function check_sudo ()
+{
 	# Make sure only root can run our script
 	if [ "$(id -u)" != "0" ]; then
-		echo "This script must be run as root"
+		echoerr "This script must be run as root"
 		exit 1
 	fi
+	echoerr "sudo successful"
 }
 
-function install_browser (){
-	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-	echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+function install_browser ()
+{
+	echoerr "Installing Google chrome ..."
+
+	sudo -u $SCRIPT_USER wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+	echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
 	PACKAGES+=$BROWSER
 }
 
-function post_install_browser (){
+function post_install_browser ()
+{
+	echoerr "Configuring Google Chrome ..."
+
 	local BROWSER_BIN=$(which $BROWSER)
+	echodebug "Browser bin: $BROWSER_BIN"
+
 	update-alternatives --install /usr/bin/x-www-browser x-www-browser $BROWSER_BIN 60
 }
 
-function install_emacs (){
+function install_emacs ()
+{
+	echoerr "Installing Emacs ..."
+
 	add-apt-repository -y ppa:ubuntu-elisp
 	PACKAGES+=$EMACS
 }
 
 function post_install_emacs (){
+	echoerr "Configuring Emacs ..."
+
 	local EMACS_BIN=$(which emacs)
+	echodebug "Emacs bin: $EMACS_BIN"
+
 	# post install emacs
 	if [ -n $EMACS_BIN ]; then
-		ln -fs $SCRIPT_DIR/../src/.emacs.d ~/.emacs.d
+		sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.emacs.d ~/.emacs.d
 	fi
 }
 
 function install_neovim (){
-	# add ppa repository
-	add-apt-repository ppa:neovim-ppa/stable
-	# add packages
+	echoerr "Installing Neovim ..."
+
+	add-apt-repository -y ppa:neovim-ppa/stable
 	PACKAGES+=$NEOVIM
 }
 
 function post_install_neovim (){
+	echoerr "Configuring Neovim ..."
+
 	local NEOVIM_BIN=$(which nvim)
 	local EDITOR_BIN=$(which editor)
 
+	echodebug "Neovim bin: $NEOVIM_BIN"
+	echodebug "Editor bin: $EDITOR_BIN"
+
+	sudo -u $SCRIPT_USER pip install --upgrade pip
+	sudo -u $SCRIPT_USER pip3 install --upgrade pip
+
+ 	sudo -u $SCRIPT_USER pip install --user neovim
+ 	sudo -u $SCRIPT_USER pip3 install --user neovim
+
 	# link the config files to ~/.config/neovim/
-	ln -fs $SCRIPT_DIR/../src/.config/nvim ~/.config/
+	sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.config/nvim ~/.config/
 
 	# install as default editor
 	update-alternatives --install $EDITOR_BIN editor $NEOVIM_BIN 60
 }
 
+function install_truecrypt (){
+	echoerr "Installing Truecrypt ..."
+
+	add-apt-repository -y ppa:stefansundin/truecrypt
+	PACKAGES+=$TRUECRYPT
+}
+
+function install_virtualbox ()
+{
+	echoerr "Installing Virtualbox ..."
+
+	sudo -u $SCRIPT_USER wget -q -O - http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc | apt-key add -
+	sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian yakkety non-free contrib" > /etc/apt/sources.list.d/virtualbox.org.list'
+	PACKAGES+=$VIRTUALBOX
+}
+
 function install_zsh (){
+	echoerr "Installing Zsh ..."
+
 	PACKAGES+=$ZSH
 }
 
 function post_install_zsh ()
 {
+	echoerr "Configuring Zsh ..."
+
 	local ZSH_BIN=$(which zsh)
+	echodebug "Zsh bin: $ZSH_BIN"
 
 	# post install zsh
 	if [ -n $ZSH_BIN ]; then
 		# change login shell of current user, not root
-		chsh -s $ZSH_BIN $SUDO_USER
+		chsh -s $ZSH_BIN $SCRIPT_USER
 		# download and install oh-my-zsh
-		sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-		ln -fs $SCRIPT_DIR/../src/.zshrc ~/.zshrc
+		sudo -u $SCRIPT_USER sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+		sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.zshrc ~/.zshrc
 	fi
 }
 
-function install_packages (){
-
+function install_packages ()
+{
 	if $OPT_BROWSER; then
+		PACKAGES+=$BROWSER
 		install_browser
 	fi
 
@@ -187,24 +264,37 @@ function install_packages (){
 		install_zsh
 	fi
 
+	if $OPT_TRUECRYPT; then
+		install_truecrypt
+	fi
+
+	if $OPT_VIRTUALBOX; then
+		install_virtualbox
+	fi
+
 	# remove duplicates
 	PACKAGES=$(printf '%s\n' $PACKAGES | sort -u)
+
 	# Install tools
 	apt-get update
 	apt-get install $PACKAGES $APT_GET_OPTIONS
 	apt-get upgrade --yes
 }
 
-function post_install (){
+function post_install ()
+{
 	local MATE=$(which mate-terminal)
 	local GNOME=$(which gnome-terminal)
+
+	echodebug "Mate: $MATE"
+	echodebug "GNOME: $GNOME"
 
 	if [ -n $MATE ]; then
 		ln -fs $MATE /usr/bin/cmd
 	elif [ -n $GNOME ]; then
 		ln -fs $GNOME /usr/bin/cmd
 	else
-		echo "No terminal shortcut set"
+		echoerr "No terminal shortcut set"
 	fi
 
 	if $OPT_BROWSER; then
@@ -223,8 +313,11 @@ function post_install (){
 		post_install_zsh
 	fi
 
-	# link the Midnight commander config files 
-	ln -fs $SCRIPT_DIR/../src/.config/mc ~/.config/
+	# link the Midnight commander config files
+	sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.config/mc ~/.config/
+
+	# link git config
+	sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.config/git ~/.config/
 }
 
 #
