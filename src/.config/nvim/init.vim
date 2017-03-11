@@ -26,17 +26,19 @@ exe 'set undodir=' . g:undo_dir
 set undofile
 set undolevels=10000
 
-set history=500                 " remember more commands and search history
-"set wildignore=*.swp,*.bak,*.pyc,*.class
+" remember more commands and search history
+set history=1000
 
-set scroll=10
-set autoread " reread files when changed from outside
+" reread files when changed from outside
+set autoread
 
-set so=10 " set 10 lines to the cursor - when moving vertical
+" set 10 lines to the cursor - when moving vertical
+set so=10
 
 " Folding
 set foldmethod=syntax
 set foldnestmax=99
+set foldlevel=99
 
 " show line number/relative
 set number
