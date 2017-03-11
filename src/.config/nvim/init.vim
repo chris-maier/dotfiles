@@ -52,20 +52,6 @@ if filereadable (expand (g:functions_file))
 	execute "source" g:functions_file
 endif
 
-augroup my_python
-	autocmd BufWritePre *.py call StripTrailingWhitespaces()
-	autocmd BufWritePre, BufRead *.py call ReindentFile()
-augroup END
-
-augroup my_vim
-	autocmd BufWritePre *.vim call StripTrailingWhitespaces()
-	autocmd BufWritePre, BufRead *.vim call ReindentFile()
-augroup END
-
-augroup my_org
-	autocmd BufEnter *.org set ft=org
-augroup END
-
 " =============== Plugin Manager ===============
 if filereadable (expand (g:plugins_file))
 	execute "source" g:plugins_file
@@ -80,3 +66,17 @@ endif
 if filereadable (expand (g:keymaps_file))
 	execute "source" g:keymaps_file
 endif
+
+augroup my_python
+	autocmd BufWritePre *.py call StripTrailingWhitespaces()
+	autocmd BufWritePre, BufRead *.py call ReindentFile()
+augroup END
+
+augroup my_vim
+	autocmd BufWritePre *.vim call StripTrailingWhitespaces()
+	autocmd BufWritePre, BufRead *.vim call ReindentFile()
+augroup END
+
+augroup my_org
+	autocmd BufEnter *.org set ft=org
+augroup END
