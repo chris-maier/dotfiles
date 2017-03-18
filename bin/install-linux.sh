@@ -7,7 +7,7 @@
 TOOLS=" mc wget curl git git-core unzip pwgen exuberant-ctags silversearcher-ag xsel"
 DEV=" clang cmake doxygen doxygen-docs graphviz mc exuberant-ctags ksh g++ subversion"
 YOCTO=" gawk git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm"
-DESKTOP=" revelation pdftk texlive-full"
+DESKTOP=" revelation pdftk texlive-full ffmpeg"
 EMACS=" emacs-snapshot"
 BROWSER=" google-chrome-stable"
 VIM=" vim-gtk"
@@ -15,6 +15,7 @@ NEOVIM=" neovim python-dev python-pip python3-dev python3-pip python-setuptools 
 ZSH=" zsh"
 TRUECRYPT=" truecrypt"
 VIRTUALBOX=" virtualbox virtualbox-qt"
+MUTT=" mutt msmtp msmtp-mta urlview m3w"
 
 # option flags
 OPT_TOOLS=true
@@ -28,6 +29,7 @@ OPT_NEOVIM=false
 OPT_ZSH=false
 OPT_TRUECRPYT=false
 OPT_VIRTUALBOX=false
+OPT_MUTT=false
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SCRIPT_USER=$SUDO_USER
