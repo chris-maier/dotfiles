@@ -30,6 +30,7 @@ OPT_ZSH=false
 OPT_TRUECRPYT=false
 OPT_VIRTUALBOX=false
 OPT_MUTT=false
+OPT_PRINTER=false
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SCRIPT_USER=$SUDO_USER
@@ -77,6 +78,7 @@ function parse_args (){
 				OPT_VIRTUALBOX=true
 				OPT_BROWSER=true
 				OPT_ZSH=true
+				OPT_PRINTER=true
 				;;
 			+emacs)
 				OPT_EMACS=true
@@ -137,6 +139,12 @@ function post_install_browser ()
 	echodebug "Browser bin: $BROWSER_BIN"
 
 	update-alternatives --install /usr/bin/x-www-browser x-www-browser $BROWSER_BIN 60
+}
+
+function install_printer ()
+{
+	echoerr "Install Brother MFC-L2700DW"
+	sh -c '$SCRIPT_DIR/linux-brprinter-installer-2.1.1-1 MFC-L2700DW'
 }
 
 function install_emacs ()
@@ -272,6 +280,10 @@ function install_packages ()
 
 	if $OPT_VIRTUALBOX; then
 		install_virtualbox
+	fi
+
+	if $OPT_PRINTER; then
+		install_printer
 	fi
 
 	# remove duplicates
