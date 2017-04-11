@@ -4,7 +4,7 @@
 # Copyright Chris Maier
 
 # Package definitions
-TOOLS=" mc wget curl git git-core unzip pwgen exuberant-ctags silversearcher-ag xsel"
+TOOLS=" mc wget curl git git-core unzip pwgen exuberant-ctags silversearcher-ag xsel autojump"
 DEV=" clang cmake doxygen doxygen-docs graphviz mc exuberant-ctags ksh g++ subversion"
 YOCTO=" gawk git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm"
 DESKTOP=" revelation pdftk texlive-full ffmpeg"
