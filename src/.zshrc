@@ -57,6 +57,10 @@ setopt nolistbeep
 setopt histappend
 setopt histverify
 
+# load the completion system 
+autoload -Uz compinit
+compinit
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -73,10 +77,10 @@ alias -g NUL="> /dev/null 2>&1"
 
 # NVIM shortcuts
 alias n="nvim"
-alias v="nvim -m"
+alias v="nvim"
 export EDITOR="nvim"
 export ALTERNATE_EDITOR=""
-export VISUAL="nvim -m"
+export VISUAL="nvim"
 
 # GIT shortcuts
 #g	git
