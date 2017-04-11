@@ -1,3 +1,8 @@
+# new keyboard mappings
+if [ -f "$HOME/.Xmodmap" ]; then
+   xmodmap "$HOME/.Xmodmap"
+fi 
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
