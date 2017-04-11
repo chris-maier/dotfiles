@@ -24,6 +24,12 @@ command Q q
 map j gj
 map k gk
 
+" move cursor faster
+map K 5k
+map J 5j
+map L W
+map H B
+
 " map ESC
 imap jk <Esc>
 imap kj <Esc>
@@ -68,16 +74,6 @@ imap <M-j> <Esc>:m+<CR>==gi
 imap <M-k> <Esc>:m-2<CR>==gi
 vnoremap <M-j> :m'>+<CR>gv=gv
 vnoremap <M-k> :m-2<CR>gv=gv
-
-" move cursor faster
-map  <C-k>	5<Up>
-imap <C-k>  	<Up><Up><Up><Up><Up>
-map  <C-j>	5<Down>
-imap <C-j>  	<Down><Down><Down><Down><Down>
-map <C-l> W
-imap <C-l> <C-Right>
-map <C-h> B
-imap <C-h> <C-Left>
 
 " Delete whole words
 "imap <C-BS> <C-W>
