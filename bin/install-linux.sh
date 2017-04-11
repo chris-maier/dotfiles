@@ -51,8 +51,6 @@ echodebug()
 	fi
 }
 
-exec > $LOGFILE
-
 #
 # Function definitions
 #
@@ -332,6 +330,10 @@ function post_install ()
 
 	# link git config
 	sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.config/git ~/.config/
+
+	# link the xmodmap file
+	sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.Xmodmap ~/.Xmodmap
+		Name=Xmodmap Init" > ~/.config/autostart/xmodmap.desktop
 }
 
 #
