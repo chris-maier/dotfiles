@@ -35,7 +35,7 @@ HISTIGNORE="ls:ll:cd:fg:j:jobs"   # Uninteresting commands to not record in hist
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git command-not-found compleat colorize pip python themes autojump)
+plugins=(git command-not-found compleat colorize pip python themes autojump history sudo)
 
 # User configuration
 
