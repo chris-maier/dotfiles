@@ -333,7 +333,6 @@ function post_install ()
 
 	# link the xmodmap file
 	sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.Xmodmap ~/.Xmodmap
-		Name=Xmodmap Init" > ~/.config/autostart/xmodmap.desktop
 }
 
 #
