@@ -12,7 +12,7 @@ EMACS=" emacs-snapshot"
 BROWSER=" google-chrome-stable"
 VIM=" vim-gtk"
 NEOVIM=" neovim python-dev python-pip python3-dev python3-pip python-setuptools python3-setuptools"
-ZSH=" zsh zsh-common zsh-docs"
+ZSH=" zsh zsh-common zsh-doc"
 TRUECRYPT=" truecrypt"
 VIRTUALBOX=" virtualbox virtualbox-qt"
 MUTT=" mutt msmtp msmtp-mta urlview m3w"
@@ -77,6 +77,7 @@ function parse_args (){
 				OPT_BROWSER=true
 				OPT_ZSH=true
 				OPT_PRINTER=true
+				OPT_MUTT=true
 				;;
 			+emacs)
 				OPT_EMACS=true
