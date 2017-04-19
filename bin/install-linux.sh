@@ -12,10 +12,10 @@ EMACS=" emacs-snapshot"
 BROWSER=" google-chrome-stable"
 VIM=" vim-gtk"
 NEOVIM=" neovim python-dev python-pip python3-dev python3-pip python-setuptools python3-setuptools"
-ZSH=" zsh zsh-common zsh-doc"
+
 TRUECRYPT=" truecrypt"
 VIRTUALBOX=" virtualbox virtualbox-qt"
-MUTT=" mutt msmtp msmtp-mta urlview m3w"
+MUTT=" mutt msmtp msmtp-mta urlview m3w libsecret-tools"
 
 # option flags
 OPT_TOOLS=true
@@ -26,7 +26,7 @@ OPT_EMACS=false
 OPT_BROWSER=false
 OPT_VIM=false
 OPT_NEOVIM=false
-OPT_ZSH=false
+
 OPT_TRUECRPYT=false
 OPT_VIRTUALBOX=false
 OPT_MUTT=false
@@ -209,29 +209,6 @@ function install_virtualbox ()
 	sudo -u $SCRIPT_USER wget -q -O - http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc | apt-key add -
 	sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian yakkety non-free contrib" > /etc/apt/sources.list.d/virtualbox.org.list'
 	PACKAGES+=$VIRTUALBOX
-}
-
-function install_zsh (){
-	echoerr "Installing Zsh ..."
-
-	PACKAGES+=$ZSH
-}
-
-function post_install_zsh ()
-{
-	echoerr "Configuring Zsh ..."
-
-	local ZSH_BIN=$(which zsh)
-	echodebug "Zsh bin: $ZSH_BIN"
-
-	# post install zsh
-	if [ -n $ZSH_BIN ]; then
-		# change login shell of current user, not root
-		chsh -s $ZSH_BIN $SCRIPT_USER
-		# download and install oh-my-zsh
-		sudo -u $SCRIPT_USER sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-		sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.zshrc ~/.zshrc
-	fi
 }
 
 function install_packages ()
