@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 packages=""
 declare -a pre_install
 declare -a post_install
@@ -13,8 +13,8 @@ opt_git=false
 opt_mutt=false
 opt_neovim=false
 opt_printer=false
-opt_tools=true
-opt_truecrpyt=false
+opt_tools=false
+opt_truecrypt=false
 opt_virtualbox=false
 opt_yocto=false
 opt_zsh=false
@@ -25,10 +25,10 @@ mutt_packages=" mutt msmtp msmtp-mta urlview m3w libsecret-tools"
 tools_packages=" mc wget curl unzip pwgen exuberant-ctags silversearcher-ag xsel autojump"
 yocto_packages=" gawk diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm"
 
-script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 apt_get_options="--yes --show-progress --auto-remove"
-#apt_get_options="-s"
+#apt_get_options+=" -s"
 
 #
 # Logging
@@ -101,6 +101,62 @@ function check_sudo ()
 	echoerr "sudo successful"
 }
 
+function check_options () {
+    if $opt_desktop; then
+	    packages+=$desktop_packages
+    fi
+
+    if $opt_dev; then
+	    packages+=$dev_packages
+    fi
+
+    if $opt_tools; then
+	    packages+=$tools_packages
+    fi
+
+    if $opt_yocto; then
+	    packages+=$yocto_packages
+    fi
+
+    if $opt_mutt; then 
+	    packages+=$mutt_packages
+    fi
+}
+
+function package_manager (){
+    # remove duplicates
+    packages=$(printf '%s\n' $packages | sort -u)
+
+    # Install all packages 
+    apt-get update
+    apt-get install $packages $apt_get_options
+    apt-get upgrade $apt_get_options
+}
+
+function terminal_shortcut (){
+    local MATE=$(which mate-terminal)
+    local GNOME=$(which gnome-terminal)
+
+    echodebug "Mate: $MATE"
+    echodebug "GNOME: $GNOME"
+
+    if [ -n $MATE ]; then
+	    ln -fs $MATE /usr/bin/cmd
+    elif [ -n $GNOME ]; then
+	    ln -fs $GNOME /usr/bin/cmd
+    else
+	    echoerr "No terminal shortcut set"
+    fi
+}
+
+function link_config (){
+    # link the Midnight commander config files
+    sudo -u $SUDO_USER ln -fs $script_dir/../src/.config/mc ~/.config/
+
+    # link the xmodmap file
+    sudo -u $SUDO_USER ln -fs $script_dir/../src/.Xmodmap ~/.Xmodmap
+}
+
 # Main
 check_sudo
 parse_args $*
@@ -117,32 +173,8 @@ for f in ${pre_install[@]}; do
 	$f
 done
 
-if $opt_desktop; then
-	packages+=$desktop_packages
-fi
-
-if $opt_dev; then
-	packages+=$dev_packages
-fi
-
-if $opt_tools; then
-	packages+=$tools_packages
-fi
-
-if $opt_yocto; then
-	packages+=$yocto_packages
-fi
-
-if $opt_mutt; then 
-	packages+=$mutt_packages
-
-# remove duplicates
-packages=$(printf '%s\n' $packages | sort -u)
-
-# Install all packages 
-apt-get update
-apt-get install $PACKAGES $APT_GET_OPTIONS
-apt-get upgrade --yes
+check_options
+package_manager
 
 # execute the post_install functions
 for f in ${post_install[@]}; do 
@@ -154,22 +186,5 @@ for f in ${result_install[@]}; do
 	$f $verbose
 done
 
-local MATE=$(which mate-terminal)
-local GNOME=$(which gnome-terminal)
 
-echodebug "Mate: $MATE"
-echodebug "GNOME: $GNOME"
 
-if [ -n $MATE ]; then
-	ln -fs $MATE /usr/bin/cmd
-elif [ -n $GNOME ]; then
-	ln -fs $GNOME /usr/bin/cmd
-else
-	echoerr "No terminal shortcut set"
-fi
-
-# link the Midnight commander config files
-sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.config/mc ~/.config/
-
-# link the xmodmap file
-sudo -u $SCRIPT_USER ln -fs $SCRIPT_DIR/../src/.Xmodmap ~/.Xmodmap

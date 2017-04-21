@@ -12,14 +12,38 @@ function zsh_preinstall (){
 function zsh_postinstall (){
 	local zsh_bin=$(which zsh)
 
-	# post install zsh
-	if [ -n $zsh_bin ]; then
-		# change login shell of current user, not root
-		zsh_verbose+=$(chsh -s $zsh_bin $SUDO_USER)
-		# download and install oh-my-zsh
-		zsh_verbose+=$(sudo -u $SUDO_USER sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)")
-		zsh_verbose+=$(sudo -u $SUDO_USER ln -fs $script_dir/../src/.zshrc ~/.zshrc)
-	fi
+    # post install zsh
+	if [ -z "${zsh_bin}" ]; then
+        zsh_result_var=1
+        zsh_verbose+="zsh binary is not installed"
+        return $zsh_result_var
+    fi
+
+	# change login shell of current user, not root
+	zsh_verbose+=$(sudo -u $SUDO_USER chsh -s $zsh_bin )
+    zsh_result_var=$?
+      
+    if [ $zsh_result_var -gt 0 ]; then 
+		zsh_verbose+="\n change default shell failed"
+        return $zsh_result_var
+	fi  
+
+	# download and install oh-my-zsh
+    zsh_verbose+=$(sudo -u $SUDO_USER sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)")
+    zsh_result_var=$?
+      
+    if [ $zsh_result_var -gt 0 ]; then 
+        zsh_verbose+="\n oh-my-zsh installation failed"
+        return $zsh_result_var
+	fi 
+
+	zsh_verbose+=$(sudo -u $SUDO_USER ln -fs $script_dir/../src/.zshrc ~/.zshrc)
+    zsh_result_var=$?
+      
+    if [ $zsh_result_var -gt 0 ]; then 
+        zsh_verbose+="\n linking of configuration file failed"
+        return $zsh_result_var
+	fi 
 }
 
 # Return the overall result of the package
@@ -33,7 +57,7 @@ function zsh_result (){
 	fi
 
 	if [ $zsh_result_var -gt 0 ]; then 
-		echo "-> FAILED"
+		echo $zsh_verbose
 	else
 		echo "-> OK"
 	fi
