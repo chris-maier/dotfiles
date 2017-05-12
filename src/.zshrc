@@ -1,7 +1,7 @@
 # new keyboard mappings
 if [ -f "$HOME/.Xmodmap" ]; then
    xmodmap "$HOME/.Xmodmap"
-fi 
+fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -25,11 +25,14 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+HISTFILE=~/.zsh_history
+SAVEHIST=100000
+HISTORY_IGNORE="(x|j|cd|ls|ll|la|pwd|history)"
 HIST_STAMPS="yyyy-mm-dd"
 HISTSIZE=100000                   # Lots of history.
 HISTFILESIZE=100000               # Lots of history in the file.
 HISTCONTROL=ignoreboth            # Ignore entries with leading white space and dupes.
-HISTIGNORE="ls:ll:cd:fg:j:jobs"   # Uninteresting commands to not record in history.
+# HISTIGNORE="ls:ll:cd:fg:j:jobs"   # Uninteresting commands to not record in history.
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -38,24 +41,30 @@ HISTIGNORE="ls:ll:cd:fg:j:jobs"   # Uninteresting commands to not record in hist
 plugins=(git command-not-found compleat colorize pip python themes autojump history sudo)
 
 # User configuration
+# Configure zsh options #######################################################
+setopt AUTO_CD # change directories without cd
+setopt AUTO_PUSHD # use directory stack
+setopt CHASE_LINKS # resolve symbolic links 
+setopt PUSHD_IGNORE_DUPS
+setopt COMPLETE_ALIASES
+setopt GLOB_COMPLETE
+setopt HIST_IGNORE_ALL_DUPS
+setopt APPEND_HISTORY
+setopt HIST_APPEND
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH=$PATH:~/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
-# Configure zsh options #######################################################
-setopt autocd 		# Jump if argument is a directory
-setopt COMPLETE_ALIASES
-setopt GLOB_COMPLETE
-setopt APPEND_HISTORY
-setopt autolist
-setopt autonamedirs
-setopt histignoredups
-setopt listtypes
-setopt nolistbeep
-setopt histappend
-setopt histverify
+# setopt autolist
+# setopt autonamedirs
+# setopt histignoredups
+# setopt listtypes
+# setopt nolistbeep
+# setopt setopt
+# histappend histverify
 
 # load the completion system 
 autoload -Uz compinit
@@ -78,9 +87,13 @@ alias -g NUL="> /dev/null 2>&1"
 # NVIM shortcuts
 alias n="nvim"
 alias v="nvim"
-export EDITOR="nvim"
+export EDITOR="ec"
 export ALTERNATE_EDITOR=""
-export VISUAL="nvim"
+export VISUAL="ec"
+export GIT_EDITOR="ec"
+
+# Autojump
+alias js="j -s"
 
 # GIT shortcuts
 #g	git
