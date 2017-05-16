@@ -38,7 +38,7 @@ HISTCONTROL=ignoreboth            # Ignore entries with leading white space and 
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git command-not-found compleat colorize pip python themes autojump history sudo)
+plugins=(git command-not-found compleat colorize pip python themes fasd history sudo)
 
 # User configuration
 # Configure zsh options #######################################################
@@ -94,6 +94,16 @@ export GIT_EDITOR="ec"
 
 # Autojump
 alias js="j -s"
+
+# FASD
+eval "$(fasd --init auto)"
+alias c='fasd_cd -d'
+# f for files
+# a for dirs and files
+# c for dirs
+# open everything
+alias e='f -e ec' # quick opening files with vim
+alias o='a -e xdg-open' # quick opening files with xdg-open
 
 # GIT shortcuts
 #g	git
