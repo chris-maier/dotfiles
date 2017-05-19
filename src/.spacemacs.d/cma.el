@@ -38,6 +38,9 @@
 (setq evil-escape-unordered-key-sequence t)
 (setq-default evil-escape-delay 0.4)
 
+;; move over line endigs
+(setq evil-cross-lines t)
+
 ;; moving over wrapped lines as they were real once
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
@@ -60,11 +63,17 @@
 ;; it overloads 'spacemacs/evil-smart-doc-lookup so remap it to "C-k"
 (evil-define-key 'normal global-map (kbd "K") 'cma/evil-prev-visual-line)
 (evil-define-key 'normal global-map (kbd "C-k") 'spacemacs/evil-smart-doc-lookup)
-
 ;; it overloads 'evil-join on "J"
 (evil-define-key 'normal global-map (kbd "J") 'cma/evil-next-visual-line)
+;; move wordwise with H and L
+(evil-define-key 'normal global-map (kbd "H") 'evil-backward-word-begin)
+(evil-define-key 'normal global-map (kbd "L") 'evil-forward-word-begin)
 
 ;; do not kill the server on exit
 (evil-leader/set-key "q q" 'spacemacs/frame-killer)
+
+;; hooks
+(add-hook 'text-mode-hook 'auto-fill-mode)
+(add-hook 'makefile-mode-hook 'whitespace-mode)
 
 (provide 'cma)
