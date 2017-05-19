@@ -1,0 +1,31 @@
+* Searching
+** In Project - ag
+helm ag SPC-/
+** Semantics
+helm semantic/imenu SPC-s-j
+** In Files - create temp buffer
+helm swoop SPC-s-s
+
+
+
+
+
+
+
+
+
+
+
+
+
+* Projects - Projectile
+** Open Projects
+
+* TODO
+** Use avy for jumping around
+**  Camel Case motion
+(spacemacs/toggle-camel-case-motion)
+** Use iedit mode
+SPC-s-i
+** Look into ranger for file trees
+** look into deer for dired
