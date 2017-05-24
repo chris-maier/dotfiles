@@ -2,6 +2,8 @@
 ;; This is my personal configuration file
 ;;
 
+(global-company-mode t)
+
 ;; Scrolling
 (setq scroll-margin 10)
 (setq scroll-step 1)

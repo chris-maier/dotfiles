@@ -31,8 +31,15 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     (c-c++ :variables c-c++enable-clang-support t)
-     auto-completion
+     (c-c++ :variables
+            c-c++enable-clang-support t)
+     (auto-completion :variables
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
+                      )
+
      emacs-lisp
      fasd
      git

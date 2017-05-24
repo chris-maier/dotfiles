@@ -6,17 +6,10 @@ helm semantic/imenu SPC-s-j
 ** In Files - create temp buffer
 helm swoop SPC-s-s
 
-
-
-
-
-
-
-
-
-
-
-
+* Evil
+** Surround
+Delete - ds<object>
+Change - cs<old><new>
 
 * Projects - Projectile
 ** Open Projects
