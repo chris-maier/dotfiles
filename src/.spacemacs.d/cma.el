@@ -44,8 +44,8 @@
 (setq evil-cross-lines t)
 
 ;; moving over wrapped lines as they were real once
-(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+(evil-define-key 'normal global-map (kbd "j") 'evil-next-visual-line)
+(evil-define-key 'normal global-map (kbd "k") 'evil-previous-visual-line)
 
 ;;  (define-key evil-normal-state-map (kbd "H") '(lambda () (interactive) (ignore-errors (evil-backward-word-begin))))
 ;;  (define-key evil-normal-state-map (kbd "L") '(lambda () (interactive) (ignore-errors (evil-forward-word-begin))))
@@ -64,15 +64,27 @@
 
 ;; it overloads 'spacemacs/evil-smart-doc-lookup so remap it to "C-k"
 (evil-define-key 'normal global-map (kbd "K") 'cma/evil-prev-visual-line)
+(evil-define-key 'visual global-map (kbd "K") 'cma/evil-prev-visual-line)
+
 (evil-define-key 'normal global-map (kbd "C-k") 'spacemacs/evil-smart-doc-lookup)
+
 ;; it overloads 'evil-join on "J"
 (evil-define-key 'normal global-map (kbd "J") 'cma/evil-next-visual-line)
+(evil-define-key 'visual global-map (kbd "J") 'cma/evil-next-visual-line)
+
 ;; move wordwise with H and L
 (evil-define-key 'normal global-map (kbd "H") 'evil-backward-word-begin)
+(evil-define-key 'visual global-map (kbd "H") 'evil-backward-word-begin)
 (evil-define-key 'normal global-map (kbd "L") 'evil-forward-word-begin)
+(evil-define-key 'visual global-map (kbd "L") 'evil-forward-word-begin)
 
 ;; do not kill the server on exit
 (evil-leader/set-key "q q" 'spacemacs/frame-killer)
+
+;; C/C++ settings
+(setq-default c-default-style "bsd"
+              c-basic-offset 4
+              tab-width 4)
 
 ;; hooks
 (add-hook 'text-mode-hook 'auto-fill-mode)

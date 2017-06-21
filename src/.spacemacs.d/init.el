@@ -6,6 +6,46 @@
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
 values."
+
+  (setq
+   cma-layers
+   '(
+     (c-c++ :variables
+            c-c++enable-clang-support t)
+     (auto-completion :variables
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
+                      )
+
+     emacs-lisp
+     git
+     gtags
+     helm
+     html
+     ibuffer
+     latex
+     org
+     php
+     python
+     ranger
+     semantic
+     shell-scripts
+     version-control
+     )
+
+   cma-linux-layers
+   '(fasd)
+
+   cma-windows-layers '()
+   )
+
+  (cond ((eq system-type 'windows-nt)
+         (setq cma-layers (append cma-layers cma-windows-layers)))
+        ((eq system-type 'gnu/linux)
+         (setq cma-layers (append cma-layers cma-linux-layers))))
+
   (setq-default
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
@@ -29,41 +69,8 @@ values."
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
-   dotspacemacs-configuration-layers
-   '(
-     (c-c++ :variables
-            c-c++enable-clang-support t)
-     (auto-completion :variables
-                      auto-completion-enable-snippets-in-popup t
-                      auto-completion-enable-help-tooltip t
-                      auto-completion-enable-sort-by-usage t
-                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
-                      )
+   dotspacemacs-configuration-layers cma-layers
 
-     emacs-lisp
-     fasd
-     git
-     gtags
-     helm
-     html
-     ibuffer
-     latex
-     latex
-     org
-     php
-     python
-     ranger
-     semantic
-     shell-scripts
-     version-control
-     ;; better-defaults
-     ;; markdown
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
-     )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -141,13 +148,20 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(molokai
-                         material
-                         solarized-dark
-                         leuven
-                         zenburn
-                         spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(afternoon
+                         ample
+                         ample-zen
+                         monokai
+                         naquadah
+                         sanityinc-tomorrow-eighties
+                         ;; molokai
+                         ;; material
+                         ;; solarized-dark
+                         ;; leuven
+                         ;; zenburn
+                         ;; spacemacs-dark
+                         ;;spacemacs-light)
+                         )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -280,14 +294,14 @@ values."
    ;;   :size-limit-kb 1000)
    ;; (default nil)
    dotspacemacs-line-numbers '(:relative nil
-                               :disabled-for-modes dired-mode
+                                         :disabled-for-modes dired-mode
                                          doc-view-mode
                                          markdown-mode
                                          org-mode
                                          pdf-view-mode
                                          text-mode
                                          compilation-mode
-                               :size-limit-kb 1000)
+                                         :size-limit-kb 1000)
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -322,13 +336,13 @@ values."
    ))
 
 (defun dotspacemacs/user-init ()
-    "Initialization function for user code.
+  "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
 executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `(dotspacemacs/user-config)' first."
-    )
+  )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -339,7 +353,7 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (add-to-list 'load-path "~/.spacemacs.d")
   (require 'cma)
- )
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
