@@ -1,0 +1,28 @@
+#!/bin/bash
+
+tmp_dir=/tmp
+
+function help () {
+    cat <<EOF
+    usage: pdfman page
+
+    This generates a man page to pdf and opens it with a generic pdf viewer.
+    It prints all pages with the same name across all sections.
+
+    page: Name of the manpage to convert to pdf
+
+EOF
+    exit 1
+}
+
+# sanity checks
+if [ $# -lt 1 ] ; then
+    echo "Wrong number of arguments"
+    help
+fi
+
+if [ ! -e ${tmp_dir}/${1}.pdf ] ; then
+    man -ta ${1} <<< \n | ps2pdf - ${tmp_dir}/${1}.pdf
+fi
+
+xdg-open ${tmp_dir}/${1}.pdf &
