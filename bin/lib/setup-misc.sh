@@ -10,7 +10,7 @@ packages="revelation truecrypt virtualbox fasd"
 # add truecrypt repository
 add-apt-repository -y ppa:stefansundin/truecrypt
 # install fasd
-add-apt-repository ppa:aacebedo/fasd
+add-apt-repository -y ppa:aacebedo/fasd
 
 wget -q -O - http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc | apt-key add -
 echo "deb http://download.virtualbox.org/virtualbox/debian yakkety non-free contrib" >> /etc/apt/sources.list.d/virtualbox.org.list
@@ -24,9 +24,9 @@ AptInstallList $packages
 sudo -u $SUDO_USER ln -fs $(readlink -f $script_dir/../../src/.Xmodmap) ~/.Xmodmap
 
 # install Terminal shortcut
-local MATE=$(which mate-terminal)
-local GNOME=$(which gnome-terminal)
-local XFCE4=$(which xfce4-terminal)
+MATE=$(which mate-terminal)
+GNOME=$(which gnome-terminal)
+XFCE4=$(which xfce4-terminal)
 
 if [ -n $MATE ]; then
 	ln -fs $MATE /usr/bin/cmd
