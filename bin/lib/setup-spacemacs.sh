@@ -27,6 +27,6 @@ fi
 AptInstallList $spacemacs_packages
 
 # link .spacemacs.d to ~/.spacemacs.d
-sudo -u $SUDO_USER ln -fs ${script_dir}/../../src/.spacemacs.d/ ~/.spacemacs.d
+sudo -u $SUDO_USER ln -fs $(readlink -f ${script_dir}/../../src/.spacemacs.d/) ~/.spacemacs.d
 
 # update-alternatives
