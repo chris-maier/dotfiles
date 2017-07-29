@@ -20,3 +20,18 @@ ${script_dir}/linux-brprinter-installer-2.1.1-1 MFC-L2700DW
 
 # link the keyboard layout file
 sudo -u $SUDO_USER ln -fs $(readlink -f $script_dir/../../src/.Xmodmap) ~/.Xmodmap
+
+# install Terminal shortcut
+local MATE=$(which mate-terminal)
+local GNOME=$(which gnome-terminal)
+local XFCE4=$(which xfce4-terminal)
+
+if [ -n $MATE ]; then
+	ln -fs $MATE /usr/bin/cmd
+elif [ -n $GNOME ]; then
+	ln -fs $GNOME /usr/bin/cmd
+elif [ -n $XFCE4 ]; then
+	ln -fs $XFCE4 /usr/bin/cmd
+else
+	EchoErr "No terminal shortcut set"
+fi
