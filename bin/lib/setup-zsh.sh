@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -x
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 zsh_packages="zsh zsh-common zsh-doc"
 
@@ -36,4 +35,4 @@ else
 fi
 
 # link .zshrc
-sudo -u $SUDO_USER ln -fs ${script_dir}/../../src/.zshrc ~/.zshrc
+sudo -u $SUDO_USER ln -fs $(readlink -f ${script_dir}/../../src/.zshrc) ~/.zshrc
