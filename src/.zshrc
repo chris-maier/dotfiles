@@ -44,7 +44,7 @@ plugins=(git command-not-found compleat colorize pip python themes fasd history 
 # Configure zsh options #######################################################
 setopt AUTO_CD # change directories without cd
 setopt AUTO_PUSHD # use directory stack
-setopt CHASE_LINKS # resolve symbolic links 
+setopt CHASE_LINKS # resolve symbolic links
 setopt PUSHD_IGNORE_DUPS
 setopt COMPLETE_ALIASES
 setopt GLOB_COMPLETE
@@ -66,7 +66,7 @@ source $ZSH/oh-my-zsh.sh
 # setopt setopt
 # histappend histverify
 
-# load the completion system 
+# load the completion system
 autoload -Uz compinit
 compinit
 

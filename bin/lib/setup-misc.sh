@@ -5,7 +5,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source shellib.sh
 CheckSudo
 
-packages="revelation truecrypt virtualbox fasd"
+packages="revelation truecrypt virtualbox fasd pwgen"
 
 # add truecrypt repository
 add-apt-repository -y ppa:stefansundin/truecrypt

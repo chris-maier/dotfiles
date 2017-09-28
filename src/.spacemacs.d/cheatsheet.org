@@ -5,6 +5,8 @@ helm ag SPC-/
 helm semantic/imenu SPC-s-j
 ** In Files - create temp buffer
 helm swoop SPC-s-s
+** Resume last search buffer
+SPC-s-l
 
 * Evil
 ** Surround

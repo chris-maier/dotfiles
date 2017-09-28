@@ -136,14 +136,18 @@ function package_manager (){
 function terminal_shortcut (){
     local MATE=$(which mate-terminal)
     local GNOME=$(which gnome-terminal)
+    local XFCE4=$(which xfce4-terminal)
 
     echodebug "Mate: $MATE"
     echodebug "GNOME: $GNOME"
+    echodebug "XFCE: $XFCE4"
 
     if [ -n $MATE ]; then
 	    ln -fs $MATE /usr/bin/cmd
     elif [ -n $GNOME ]; then
 	    ln -fs $GNOME /usr/bin/cmd
+    elif [ -n $XFCE4 ]; then 
+            ln -fs $XFCE4 /usr/bin/cmd
     else
 	    echoerr "No terminal shortcut set"
     fi
