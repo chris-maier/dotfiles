@@ -38,9 +38,9 @@
 ;; evil escape configuration
 (setq-default evil-escape-key-sequence "jk")
 (setq evil-escape-unordered-key-sequence t)
-(setq-default evil-escape-delay 0.4)
+(setq-default evil-escape-delay 0.2)
 
-;; move over line endigs
+;; move over line endings
 (setq evil-cross-lines t)
 
 ;; moving over wrapped lines as they were real once
@@ -87,8 +87,13 @@
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'makefile-mode-hook 'whitespace-mode)
 
-;; example configuration for mu4e
+;; ---- MU4E ----
 (require 'mu4e)
+
+;; disable evil mode in mu4e
+(evil-set-initial-state 'mu4e-main-mode 'emacs)
+(evil-set-initial-state 'mu4e-headers-mode 'emacs)
+(evil-set-initial-state 'mu4e-view-mode 'emacs)
 
 (setq mu4e-view-show-images t)
 ;; path to our Maildir directory
