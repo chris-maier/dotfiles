@@ -13,7 +13,7 @@ values."
    cma-layers
    '(
      (c-c++ :variables
-            c-c++enable-clang-support t)
+            c-c++-enable-clang-support t)
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
@@ -26,19 +26,17 @@ values."
 
      emacs-lisp
      git
-     gtags
+     ;; gtags
      helm
-     html
+     ;; html
      ibuffer
      latex
      org
-     php
      python
-     ranger
+     ;; ranger
      semantic
      shell-scripts
      version-control
-     gnus
      (mu4e :variables
            mu4e-installation-path "/usr/local/share/emacs/site-lisp/mu4e")
      )
