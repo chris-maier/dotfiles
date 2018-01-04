@@ -87,6 +87,11 @@
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'makefile-mode-hook 'whitespace-mode)
 
+;; additional modes for tex
+(add-hook 'TeX-mode-hook 'smartparens-mode)
+(add-hook 'TeX-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'TeX-mode-hook 'highlight-parentheses-mode)
+
 ;; ---- MU4E ----
 (require 'mu4e)
 
@@ -111,7 +116,9 @@
 (setq mu4e-get-mail-command "offlineimap")
 
 (setq mu4e-attachment-dir  "~/Downloads")
+
 (setq mu4e-contexts
+      ;; backtick is necessary. It disables evaluation for every subexpression not preceded by a comma
       `( ,(make-mu4e-context
            :name "Chris"
            ;; :enter-func (lambda () (mu4e-message "chris@chris-maier.com"))
@@ -201,6 +208,16 @@
                     (mu4e-refile-folder . "/LocalAcurana/Archives")
                     ))
          ))
+
+;; Modifie Header field in mu4e-header
+(setq mu4e-headers-fields
+      '((:human-date . 12)
+        (:flags . 6)
+        (:mailing-list . 10)
+        (:from . 22)
+        (:to . 22)
+        (:subject))
+      )
 
 (setq mu4e-context-policy 'pick-first)
 
