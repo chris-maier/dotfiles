@@ -209,7 +209,7 @@
                     ))
          ))
 
-;; Modifie Header field in mu4e-header
+;; Modify Header field in mu4e-header
 (setq mu4e-headers-fields
       '((:human-date . 12)
         (:flags . 6)
