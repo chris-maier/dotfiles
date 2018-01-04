@@ -78,17 +78,19 @@ compinit
 #
 # MISC
 alias x="exit"
+alias xo="xdg-open"
 alias more="less"
-alias -g G="| grep"
+alias ag="ag $* --pager 'less -R'"
+alias -g G="| ag"
 alias -g L="| less"
 alias -g TL="| tail -20"
 alias -g NUL="> /dev/null 2>&1"
+alias lR="ls -lR"
 
-# NVIM shortcuts
-alias n="nvim"
-alias v="nvim"
+export PAGER="less"
+export LESS="-isM"
 export EDITOR="ec"
-export ALTERNATE_EDITOR=""
+export ALTERNATE_EDITOR="ec"
 export VISUAL="ec"
 export GIT_EDITOR="ec"
 
@@ -102,7 +104,7 @@ alias c='fasd_cd -d'
 # a for dirs and files
 # c for dirs
 # open everything
-alias e='f -e ec' # quick opening files with vim
+alias e='f -e ec' # quick opening files with emacs
 alias o='a -e xdg-open' # quick opening files with xdg-open
 
 # GIT shortcuts
