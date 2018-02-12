@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 # copied from https://medium.com/@bobbypriambodo/blazingly-fast-spacemacs-with-persistent-server-92260f2118b7
 # Checks if there's a frame open
@@ -6,4 +7,6 @@ emacsclient -a '' -n -e "(if (> (length (frame-list)) 1) 't)" 2> /dev/null | gre
 
 if [ "$?" -eq "1" ]; then
 	emacsclient -nc "$@" &> /dev/null
+else
+	emacsclient -n "$@" &> /dev/null
 fi
