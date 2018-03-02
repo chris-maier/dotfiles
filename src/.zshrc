@@ -54,6 +54,7 @@ setopt HIST_APPEND
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 export PATH=$PATH:~/bin
+export PATH=$PATH:/usr/local/android-studio/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -80,15 +81,15 @@ compinit
 alias x="exit"
 alias xo="xdg-open"
 alias more="less"
-alias ag="ag $* --pager 'less -R'"
-alias -g G="| ag"
+alias ag="ag $* --pager 'less'"
+alias -g G="| grep -i"
 alias -g L="| less"
 alias -g TL="| tail -20"
 alias -g NUL="> /dev/null 2>&1"
 alias lR="ls -lR"
 
 export PAGER="less"
-export LESS="-isM"
+export LESS="-isMgRFX"
 export EDITOR="ec"
 export ALTERNATE_EDITOR="ec"
 export VISUAL="ec"
