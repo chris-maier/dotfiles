@@ -37,12 +37,13 @@ values."
      semantic
      shell-scripts
      version-control
-     (mu4e :variables
-           mu4e-installation-path "/usr/local/share/emacs/site-lisp/mu4e")
      )
 
    cma-linux-layers
-   '(fasd)
+   '(fasd
+     (mu4e :variables
+           mu4e-installation-path "/usr/local/share/emacs/site-lisp/mu4e")
+     )
 
    cma-windows-layers '()
    )
@@ -50,7 +51,9 @@ values."
   (cond ((eq system-type 'windows-nt)
          (setq cma-layers (append cma-layers cma-windows-layers)))
         ((eq system-type 'gnu/linux)
-         (setq cma-layers (append cma-layers cma-linux-layers))))
+         (setq cma-layers (append cma-layers cma-linux-layers)))
+        (t (error "Unknown OS"))
+        )
 
   (setq-default
    ;; Base distribution to use. This is a layer contained in the directory
