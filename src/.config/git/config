@@ -1,5 +1,5 @@
 [user]
-	name = Chris Maier
+	name = Chris Langhans
 	email = chris@chris-maier.com
 [credential]
 	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
