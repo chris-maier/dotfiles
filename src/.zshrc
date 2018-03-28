@@ -3,14 +3,16 @@ if [ -f "$HOME/.Xmodmap" ]; then
    xmodmap "$HOME/.Xmodmap"
 fi
 
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# Geze Proxy settings
+export ftp_proxy=""
+export https_proxy=""
+export http_proxy=""
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="philips"
+ZSH_THEME="../../Workspace/dotfiles/src/my-theme"
 
 # Disable auto-setting terminal title.
 DISABLE_AUTO_TITLE="true"
@@ -22,50 +24,39 @@ COMPLETION_WAITING_DOTS="true"
 # status check for large repositories much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HISTFILE=~/.zsh_history
-SAVEHIST=100000
-HISTORY_IGNORE="(x|j|cd|ls|ll|la|pwd|history)"
+# HISTORY settings
+HISTFILE="$HOME/.zhistory"
+HISTSIZE=10000000
+SAVEHIST=10000000
 HIST_STAMPS="yyyy-mm-dd"
-HISTSIZE=100000                   # Lots of history.
-HISTFILESIZE=100000               # Lots of history in the file.
-HISTCONTROL=ignoreboth            # Ignore entries with leading white space and dupes.
-# HISTIGNORE="ls:ll:cd:fg:j:jobs"   # Uninteresting commands to not record in history.
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git command-not-found compleat colorize pip python themes fasd history sudo)
+plugins=(git command-not-found colored-man-pages compleat colorize pip python themes fasd history sudo)
 
 # User configuration
 # Configure zsh options #######################################################
 setopt AUTO_CD # change directories without cd
 setopt AUTO_PUSHD # use directory stack
 setopt CHASE_LINKS # resolve symbolic links
-setopt PUSHD_IGNORE_DUPS
 setopt COMPLETE_ALIASES
 setopt GLOB_COMPLETE
-setopt HIST_IGNORE_ALL_DUPS
-setopt APPEND_HISTORY
-setopt HIST_APPEND
-
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-export PATH=$PATH:~/bin
-export PATH=$PATH:/usr/local/android-studio/bin
-# export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
-
-# setopt autolist
-# setopt autonamedirs
-# setopt histignoredups
-# setopt listtypes
-# setopt nolistbeep
-# setopt setopt
-# histappend histverify
 
 # load the completion system
 autoload -Uz compinit
@@ -76,7 +67,6 @@ compinit
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-#
 # MISC
 alias x="exit"
 alias xo="xdg-open"
@@ -85,18 +75,9 @@ alias ag="ag $* --pager 'less'"
 alias -g G="| grep -i"
 alias -g L="| less"
 alias -g TL="| tail -20"
-alias -g NUL="> /dev/null 2>&1"
+alias -g NUL=">/dev/null 2>&1"
+alias -g ERRNUL="2>/dev/null"
 alias lR="ls -lR"
-
-export PAGER="less"
-export LESS="-isMgRFX"
-export EDITOR="ec"
-export ALTERNATE_EDITOR="ec"
-export VISUAL="ec"
-export GIT_EDITOR="ec"
-
-# Autojump
-alias js="j -s"
 
 # FASD
 eval "$(fasd --init auto)"
@@ -232,6 +213,7 @@ alias serve='python -m SimpleHTTPServer 8000'
 
 alias cd..="cd .." # I often make this mistake
 
-# personal shortcuts 
-alias claPassFile='revelation /home/chris/Documents/Accounts/passwords &'
-alias claPassPrivate='truecrypt /home/chris/Documents/private &'
+# personal shortcuts
+alias cmaPassFile='revelation /home/chris/Documents/Accounts/passwords &'
+alias cmaPassPrivate='truecrypt /home/chris/Documents/private &'
+
