@@ -139,4 +139,4 @@
 (setq mail-specify-envelope-from t)
 (setq mail-envelope-from 'header)
 
-(provide mu4e-local)
+(provide 'mu4e-local)
