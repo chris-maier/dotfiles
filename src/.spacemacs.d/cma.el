@@ -85,7 +85,6 @@
 
 ;; hooks
 (add-hook 'text-mode-hook 'auto-fill-mode)
-(add-hook 'makefile-mode-hook 'whitespace-mode)
 
 ;; additional modes for tex
 (add-hook 'TeX-mode-hook 'smartparens-mode)
@@ -93,11 +92,9 @@
 (add-hook 'TeX-mode-hook 'highlight-parentheses-mode)
 
 (cond ((eq system-type 'gnu/linux)
-       '(progn
-          ;; ---- MU4E ----
-          (require 'mu4e)
-          (eval-after-load "mu4e" '(load mu4e-local))
-          )
+       (require 'mu4e)
+       (require 'mu4e-local)
+       (message "mu4e loaded")
        )
       )
 
