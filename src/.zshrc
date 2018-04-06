@@ -214,6 +214,5 @@ alias serve='python -m SimpleHTTPServer 8000'
 alias cd..="cd .." # I often make this mistake
 
 # personal shortcuts
-alias cmaPassFile='revelation /home/chris/Documents/Accounts/passwords &'
-alias cmaPassPrivate='truecrypt /home/chris/Documents/private &'
-
+# alias clPassFile='revelation /home/chris/Documents/Accounts/passwords &'
+# alias clPassPrivate='truecrypt /home/chris/Documents/private &'
