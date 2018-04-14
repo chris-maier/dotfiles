@@ -33,12 +33,8 @@
                                                                (list :to :from :bcc :cc) "chris@chris-maier.com"
                                                                )))
            :vars '( (user-mail-address      . "chris@chris-maier.com"  )
-                    (user-full-name         . "Chris Maier" )
+                    (user-full-name         . "Chris Langhans" )
                     (mu4e-compose-signature . nil)
-                    ;; ( mu4e-compose-signature .
-                    ;;   (concat
-                    ;;     "Alice Derleth\n"
-                    ;;     "Lauttasaari, Finland\n"))
                     (mu4e-sent-folder . "/LocalChris/INBOX/Sent")
                     (mu4e-drafts-folder . "/LocalChris/INBOX/Drafts")
                     (mu4e-trash-folder . "/LocalChris/INBOX/Trash")
@@ -53,7 +49,7 @@
                                                                (list :to :from :bcc :cc) "info@chris-maier.com"
                                                                )))
            :vars '( (user-mail-address       . "info@chris-maier.com")
-                    (user-full-name          . "Chris Maier")
+                    (user-full-name          . "Chris Langhans")
                     (mu4e-compose-signature  . nil)
                     (mu4e-sent-folder . "/LocalInfo/INBOX/Sent")
                     (mu4e-drafts-folder . "/LocalInfo/INBOX/Drafts")
@@ -61,38 +57,38 @@
                     (mu4e-refile-folder . "/LocalInfo/INBOX/Archives")
                     ))
 
-         ,(make-mu4e-context
-           :name "Web.de"
-           :enter-func (lambda () (mu4e-message "chris.maier85@web.de"))
-           :match-func (lambda (msg)
-                         (when msg
-                           (mu4e-message-contact-field-matches msg
-                                                               (list :to :from :bcc :cc) "chris.maier85@web.de")))
-           :vars '( (user-mail-address       . "chris.maier85@web.de" )
-                    (user-full-name          . "Chris Maier" )
-                    (mu4e-compose-signature  . nil)
-                    (mu4e-sent-folder . "/LocalWeb.de/Sent")
-                    (mu4e-drafts-folder . "/LocalWeb.de/Drafts")
-                    (mu4e-trash-folder . "/LocalWeb.de/Trash")
-                    (mu4e-refile-folder . "/LocalWeb.de/Archives")
-                    ))
+         ;; ,(make-mu4e-context
+         ;;   :name "Web.de"
+         ;;   :enter-func (lambda () (mu4e-message "chris.maier85@web.de"))
+         ;;   :match-func (lambda (msg)
+         ;;                 (when msg
+         ;;                   (mu4e-message-contact-field-matches msg
+         ;;                                                       (list :to :from :bcc :cc) "chris.maier85@web.de")))
+         ;;   :vars '( (user-mail-address       . "chris.maier85@web.de" )
+         ;;            (user-full-name          . "Chris Langhans" )
+         ;;            (mu4e-compose-signature  . nil)
+         ;;            (mu4e-sent-folder . "/LocalWeb.de/Sent")
+         ;;            (mu4e-drafts-folder . "/LocalWeb.de/Drafts")
+         ;;            (mu4e-trash-folder . "/LocalWeb.de/Trash")
+         ;;            (mu4e-refile-folder . "/LocalWeb.de/Archives")
+         ;;            ))
 
-         ,(make-mu4e-context
-           :name "Gmail"
-           :enter-func (lambda () (mu4e-message "otix85@googlemail.com"))
-           :match-func (lambda (msg)
-                         (when msg
-                           (mu4e-message-contact-field-matches msg
-                                                               (list :to :from :bcc :cc) "otix85@googlemail.com")
-                           ))
-           :vars '( (user-mail-address       . "otix85@googlemail.com")
-                    (user-full-name          . "Chris Maier")
-                    (mu4e-compose-signature  . nil)
-                    (mu4e-sent-folder . "/LocalGmail/Sent")
-                    (mu4e-drafts-folder . "/LocalGmail/Drafts")
-                    (mu4e-trash-folder . "/LocalGmail/Trash")
-                    (mu4e-refile-folder . "/LocalGmai/Archives")
-                    ))
+         ;; ,(make-mu4e-context
+         ;;   :name "Gmail"
+         ;;   :enter-func (lambda () (mu4e-message "otix85@googlemail.com"))
+         ;;   :match-func (lambda (msg)
+         ;;                 (when msg
+         ;;                   (mu4e-message-contact-field-matches msg
+         ;;                                                       (list :to :from :bcc :cc) "otix85@googlemail.com")
+         ;;                   ))
+         ;;   :vars '( (user-mail-address       . "otix85@googlemail.com")
+         ;;            (user-full-name          . "Chris Langhans")
+         ;;            (mu4e-compose-signature  . nil)
+         ;;            (mu4e-sent-folder . "/LocalGmail/Sent")
+         ;;            (mu4e-drafts-folder . "/LocalGmail/Drafts")
+         ;;            (mu4e-trash-folder . "/LocalGmail/Trash")
+         ;;            (mu4e-refile-folder . "/LocalGmail/Archives")
+         ;;            ))
 
          ,(make-mu4e-context
            :name "Acurana"
@@ -103,7 +99,7 @@
                                                                (list :to :from :bcc :cc) "chris.maier@acurana.de")
                            ))
            :vars '( (user-mail-address       . "chris.maier@acurana.de")
-                    (user-full-name          . "Chris Maier")
+                    (user-full-name          . "Chris Langhans")
                     (mu4e-compose-signature  . nil)
                     (mu4e-sent-folder . "/LocalAcurana/Sent")
                     (mu4e-drafts-folder . "/LocalAcurana/Drafts")
@@ -123,6 +119,8 @@
       )
 
 (setq mu4e-context-policy 'pick-first)
+;; Don't ask to quit... ?
+(setq mu4e-confirm-quit nil)
 
 ;; we substitute sendmail with msmtp
 (setq sendmail-program "/usr/bin/msmtp")
