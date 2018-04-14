@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+source lib/shellib.sh
+
+function main (){
+    android_bin=/opt/android-studio/bin/studio.sh
+    CmdAvailable $android_bin || exit 1
+    $android_bin &
+}
+
+main
