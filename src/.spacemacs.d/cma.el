@@ -3,6 +3,7 @@
 ;;
 (global-company-mode t)
 (yas-global-mode t)
+(spacemacs/toggle-camel-case-motion-globally-on)
 
 ;; Scrolling
 (setq scroll-margin 10)
