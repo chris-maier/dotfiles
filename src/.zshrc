@@ -77,7 +77,18 @@ alias -g L="| less"
 alias -g TL="| tail -20"
 alias -g NUL=">/dev/null 2>&1"
 alias -g ERRNUL="2>/dev/null"
-alias lR="ls -lR"
+
+# colorful LS
+alias l='ls -lFh --color=always'     #size,show type,human readable
+alias ls='ls --color=always'
+alias la='ls -lAFh --color=always'   #long list,show almost all,show type,human readable
+alias lr='ls -tRFh --color=always'   #sorted by date,recursive,show type,human readable
+alias lt='ls -ltFh --color=always'   #long list,sorted by date,show type,human readable
+alias ll='ls -l --color=always'      #long list
+
+# find fast
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
 
 # FASD
 eval "$(fasd --init auto)"
