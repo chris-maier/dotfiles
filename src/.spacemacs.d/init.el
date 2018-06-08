@@ -30,7 +30,6 @@ values."
      helm
      ;; html
      ibuffer
-     latex
      org
      python
      ;; ranger
@@ -43,6 +42,11 @@ values."
    '(fasd
      (mu4e :variables
            mu4e-installation-path "/usr/local/share/emacs/site-lisp/mu4e")
+
+     (latex :variables
+            latex-enable-auto-fill t
+            latex-enable-folding t
+            )
      )
 
    cma-windows-layers '()
