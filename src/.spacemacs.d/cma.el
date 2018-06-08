@@ -5,6 +5,17 @@
 (yas-global-mode t)
 (spacemacs/toggle-camel-case-motion-globally-on)
 
+(setq user-full-name "Chris Langhans")
+(setq user-mail-address "chris@langhans-coding.de")
+
+;; UTF8!
+(set-language-environment 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
 ;; Scrolling
 (setq scroll-margin 10)
 (setq scroll-step 1)
