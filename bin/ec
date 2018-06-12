@@ -1,23 +1,13 @@
 #!/bin/bash
 
-# # copied from https://medium.com/@bobbypriambodo/blazingly-fast-spacemacs-with-persistent-server-92260f2118b7
-# # Checks if there's a frame open
-# emacsclient -a '' -n -e "(if (> (length (frame-list)) 1) 't)" 2> /dev/null | grep t &> /dev/null
-
-# if [ "$?" -eq "1" ]; then
-# 	emacsclient -nc "$@" &> /dev/null
-# else
-# 	emacsclient -n "$@" &> /dev/null
-# fi
-
 if [[ "$#" -lt 1 ]] ; then
-    emacsclient -n -a '' -c -e \
-                "(select-frame-set-input-focus (selected-frame))" \
-                "(delete-other-windows)" \
-                "(spacemacs/home)" >/dev/null 2>&1 &
+    file_open="spacemacs/home"
 else
-    emacsclient -a '' -c -e \
-                "(select-frame-set-input-focus (selected-frame))" \
-                "(delete-other-windows)" \
-                "(find-file \"$1\")" >/dev/null 2>&1 &
+    file_open="find-file \"$1\""
 fi
+
+# bring frame to the foreground
+emacsclient -n -a '' -c -e \
+            "(select-frame-set-input-focus (selected-frame))" \
+            "(delete-other-windows)" \
+            "(${file_open})" > /dev/null 2>&1

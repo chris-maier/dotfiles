@@ -4,33 +4,12 @@
 	email = chris@langhans-coding.de
 [credential]
 	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
-[push]
-	default = simple
-[color]
-	# Enable colors in color-supporting terminals
-	ui = auto
 [alias]
 	lg = log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'
 [core]
-	editor = ec -w
 	# Don't paginate output by default
-	pager = cat
-	#
-	# Out of luck: on Windows w/o msysGit? You may have Notepad++…
-	# editor = 'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin
-	#
-	# If you want to use Sublime Text 2's subl wrapper:
-	# editor = subl -w
-	#
-	# Or Atom, perhaps:
-	# editor = atom --wait
-	#
-	# Sublime Text 2 on Windows:
-	# editor = 'c:/Program Files (x86)/Sublime Text 2/sublime_text.exe' -w
-	#
-	# Sublime Text 3 on Windows:
-	# editor = 'c:/Program Files/Sublime Text 3/subl.exe' -w
-	#
+	pager = less
+
 	# Don't consider trailing space change as a cause for merge conflicts
 	whitespace = -trailing-space
 [diff]
@@ -85,3 +64,6 @@
 [color "branch"]
 	# Blue on black is hard to read in git branch -vv: use cyan instead
 	upstream = cyan
+
+	# Enable colors in color-supporting terminals
+	ui = auto
