@@ -55,6 +55,7 @@ setopt AUTO_PUSHD # use directory stack
 setopt CHASE_LINKS # resolve symbolic links
 setopt COMPLETE_ALIASES
 setopt GLOB_COMPLETE
+setopt NONOMATCH
 
 source $ZSH/oh-my-zsh.sh
 
@@ -71,7 +72,7 @@ compinit
 alias x="exit"
 alias xo="xdg-open"
 alias more="less"
-alias ag="ag $* --pager 'less'"
+alias ag="ag --pager 'less'"
 alias -g G="| grep -i"
 alias -g L="| less"
 alias -g TL="| tail -20"
